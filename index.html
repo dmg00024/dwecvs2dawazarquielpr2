@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es" data-theme="oscuro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Centro de operaciones · DWEC</title>
+  <link rel="stylesheet" href="css/estilos.css">
+  <script src="js/jquery.min.js" defer></script>
+  <script src="js/perfil.js" defer></script>
+  <script src="js/motor.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+<div class="contenedor">
+  <header class="cabecera">
+    <div><p class="etiqueta">DWEC · 2.º DAW · PRÁCTICA GUIADA P02</p>
+      <h1>Centro de operaciones</h1>
+      <p class="subtitulo">Presupuestos, reglas variables, estados, expiración y registro persistente.</p>
+    </div>
+    <button type="button" class="boton secundario" id="cambiarTema">Alternar tema</button>
+  </header>
+  <section class="perfil">
+    <div><p class="etiqueta">PERFIL PERSONALIZADO</p><h2 id="nombrePerfil">Configura tu perfil</h2>
+      <p id="descripcionPerfil" class="sutil">Completa js/perfil.js</p></div>
+    <div class="chips"><span id="etiquetaCodigo"></span><span id="etiquetaVariante"></span><span id="etiquetaLimite"></span><span id="etiquetaRecargo"></span><span id="etiquetaTiempo"></span></div>
+  </section>
+  <main class="columnas">
+    <section class="panel">
+      <div class="titulo"><p class="etiqueta">MÓDULO 1</p><h2>Generador de presupuesto</h2></div>
+      <form id="formPresupuesto" novalidate>
+        <label for="servicio">Servicio</label>
+        <select id="servicio" name="servicio">
+          <option value="">Selecciona un servicio</option>
+          <option value="basico">Servicio básico — 11,50 € / unidad</option>
+          <option value="estandar">Servicio estándar — 19,25 € / unidad</option>
+          <option value="premium">Servicio premium — 32,75 € / unidad</option>
+        </select>
+        <div class="dos">
+          <div><label for="cantidad">Unidades</label><input id="cantidad" name="cantidad" type="number" step="any" placeholder="1 ... máximo personal"></div>
+          <div><label for="turno">Franja solicitada</label><select id="turno" name="turno"><option value="">Elige una franja</option><option value="manana">Mañana</option><option value="tarde">Tarde</option></select></div>
+        </div>
+        <p class="ayuda">La política de descuento y el límite dependen de tu perfil. Los datos vacíos y decimales deben rechazarse.</p>
+        <div class="acciones"><button class="boton primario" type="submit" id="cotizar">Cotizar</button><button type="button" class="boton secundario" id="cancelar">Cancelar cotización</button></div>
+      </form>
+      <div id="mensaje" class="mensaje" role="status" aria-live="polite">Introduce los datos y pulsa «Cotizar».</div>
+    </section>
+    <section class="panel destacado">
+      <div class="titulo"><p class="etiqueta">MÓDULO 2</p><h2>Control de la operación</h2></div>
+      <div class="estado-cabecera"><span id="estado" class="estado">SIN COTIZACIÓN</span><span id="temporizador" class="temporizador">-- s</span></div>
+      <div class="partida"><span>Subtotal</span><strong id="subtotal">—</strong></div>
+      <div class="partida"><span>Descuento personalizado</span><strong id="descuento">—</strong></div>
+      <div class="partida"><span>Recargo de servicio</span><strong id="recargo">—</strong></div>
+      <div class="partida total"><span>TOTAL</span><strong id="total">—</strong></div>
+      <p class="sutil" id="razonDescuento">La política de descuento aparecerá al cotizar.</p>
+      <button type="button" class="boton confirmar" id="confirmar" disabled>Confirmar presupuesto</button>
+      <p id="referencia" class="referencia">Todavía no hay operación confirmada.</p>
+    </section>
+  </main>
+  <section class="panel resumen"><div><p class="etiqueta">MÓDULO 3</p><h2>Resumen persistente</h2><p class="sutil">Las cifras se conservan al recargar; la cotización activa no.</p></div>
+    <div class="metricas"><div><p>Confirmadas</p><strong id="operaciones">0</strong></div><div><p>Importe acumulado</p><strong id="acumulado">0,00 €</strong></div><div><p>Última referencia</p><strong id="ultima">—</strong></div></div>
+    <button type="button" class="boton secundario" id="reiniciar">Reiniciar histórico</button>
+  </section>
+  <footer>IES Azarquiel · Desarrollo Web en Entorno Cliente · Alumnado · UT01–UT04</footer>
+</div>
+</body>
+</html>

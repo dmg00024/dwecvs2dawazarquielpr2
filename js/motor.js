@@ -11,7 +11,7 @@ function precioCentimos(servicio) {
   else if (servicio === "premium") {
     return 3275;
   }
-  else{
+  else {
     return 0;
   }
 }
@@ -20,7 +20,36 @@ function precioCentimos(servicio) {
 // Obligatorio comprobar servicio, turno, vacío, NaN, decimales, [1, limite]
 // Y la restricción de la temática personal. Además, el perfil no puede quedarse sin personalizar.
 function validarSolicitud(servicio, cantidadTexto, turno, limite, tema) {
-  return "Pendiente de implementar validación.";
+
+  if (PERFIL.identificador == "" || PERFIL.identificador == "cambia-este-id") {
+    return "Error: Debe personalizar su perfil antes de realizar la solicitud.";
+  }
+
+  if (servicio == "") {
+    return "Error: Debe seleccionar un servicio.";
+  }
+  if (turno == "") {
+    return "Error: Debe seleccionar un turno.";
+  }
+  if (cantidadTexto == "") {
+    return "Error: Debe ingresar el número de plazas.";
+  }
+  const cantidad = Number(cantidadTexto);
+
+  if (!Number.isInteger(cantidad)) {
+    return "Error: La cantidad debe ser un número entero.";
+  }
+
+  if (cantidad < 1 || cantidad > limite) {
+    return `Error: la cantidad debe estar entre 1 y ${limite} plazas.`;
+  }
+
+  if (tema == "deporte" && servicio == "basico" && turno == "tarde") {
+    return `Error: tu temática ${tema} no está disponible para el servicio ${servicio} en el turno de ${turno}.`;
+  }
+
+  return "";
+
 }
 
 // TODO M3: aplicar EXACTAMENTE la política que corresponda a variante (0-3).

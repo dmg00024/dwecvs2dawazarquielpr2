@@ -2,7 +2,18 @@
 
 // TODO M1: según el servicio, devolver el precio en céntimos (1150, 1925, 3275).
 function precioCentimos(servicio) {
-  return 0;
+  if (servicio === "basico") {
+    return 1150;
+  }
+  else if (servicio === "estandar") {
+    return 1925;
+  }
+  else if (servicio === "premium") {
+    return 3275;
+  }
+  else{
+    return 0;
+  }
 }
 
 // TODO M2: devolver "" si todo es válido, o un MENSAJE claro si hay error.

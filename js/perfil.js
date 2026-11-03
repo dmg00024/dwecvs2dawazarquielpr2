@@ -2,9 +2,9 @@
 // Personalización: datos académicos mínimos, no sensibles.
 // Cada alumno debe completar su identificador único y elegir un tema de interés.
 const PERFIL = {
-  identificador: "cambia-este-id",   // Ej.: anaGarciap2; exactamente como el sufijo de tus ramas
-  tema: "tecnologia",               // tecnologia | deporte | musica | cine
-  descripcion: "Describe en una frase tu servicio, relacionado con tu tema elegido."
+  identificador: "adrianLozanop2",   // Ej.: anaGarciap2; exactamente como el sufijo de tus ramas
+  tema: "deporte",               // tecnologia | deporte | musica | cine
+  descripcion: "Club deportivo con escuelas de fútbol y baloncesto y sala de gimnasio, en turnos de mañana y tarde."
 };
 
 // Función suministrada. No hay que modificarla.

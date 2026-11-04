@@ -78,11 +78,17 @@ function calcularRecargo(subtotal, porcentaje) {
 // TODO M5: DWEC-IDENTIFICADOR-0001 (secuencia de cuatro cifras como mínimo).
 function construirReferencia(identificador, contador) {
   const id = identificador.toUpperCase();
+  //el .padStart(4, "0") asegura que el número tenga al menos 4 dígitos, rellenando con ceros a la izquierda
+  //si ponemos un 1, se llenaría de 1s a la izquierda, por eso usamos "0".
   const numero = String(contador).padStart(4, "0");
   return `DWEC-${id}-${numero}`;
 }
 
 // TODO M6: formatear 12345 céntimos como "123,45 €".
 function euros(centimos) {
-  return "—";
+
+  //para pasar de centimos a euros, dividimos entre 100 y usamos toFixed(2) para tener dos decimales. 
+  //Luego reemplazamos el punto por una coma (.replace lo hace) y añadimos el símbolo de euro.
+  const euros = (centimos / 100).toFixed(2).replace('.', ',');
+  return `${euros} €`;
 }

@@ -27,16 +27,17 @@ function actualizarResumen() {
   $("#operaciones").text(operaciones);
   $("#acumulado").text(euros(acumulado));
   $("#ultima").text(ultimaReferencia);
-
-
 }
-
 // TODO A3: leer los tres valores de localStorage de este perfil, sanearlos,
 // y llamar a actualizarResumen(). Si no existen, usar 0, 0, "—".
 function recuperarHistorico() {}
 
 // TODO A4: guardar en localStorage operaciones, acumulado y ultimaReferencia.
-function guardarHistorico() {}
+function guardarHistorico() {
+  localStorage.setItem(`${PREFIJO_STORAGE}operaciones`, operaciones);
+  localStorage.setItem(`${PREFIJO_STORAGE}acumulado`, acumulado);
+  localStorage.setItem(`${PREFIJO_STORAGE}ultimaReferencia`, ultimaReferencia);
+}
 
 // TODO A5: detener el intervalo previo y reiniciar el instante de caducidad.
 function detenerReloj() {}

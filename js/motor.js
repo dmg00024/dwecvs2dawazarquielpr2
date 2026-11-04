@@ -55,6 +55,18 @@ function validarSolicitud(servicio, cantidadTexto, turno, limite, tema) {
 // TODO M3: aplicar EXACTAMENTE la política que corresponda a variante (0-3).
 // Trabajar siempre en céntimos y aplicar Math.round cuando haya porcentaje.
 function calcularDescuento(subtotal, cantidad, servicio, turno, variante) {
+
+  // Política A (variante 0): 1-3 plazas 0 %, 4-6 plazas 8 %, 7 o más 13 %
+  if (variante === 0) {
+    if (cantidad >= 7) {
+      return Math.round(subtotal * 13 / 100);
+    }
+    if (cantidad >= 4) {
+      return Math.round(subtotal * 8 / 100);
+    }
+    return 0;
+  }
+
   return 0;
 }
 

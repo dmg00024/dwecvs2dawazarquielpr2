@@ -12,6 +12,14 @@ let ultimaReferencia = "—";
 // TODO A1: mostrar los datos derivados del perfil en la cabecera.
 function mostrarPerfil() {
   $("#nombrePerfil").text(`${PERFIL.identificador} · ${PERFIL.tema}`);
+  $("#etiquetaCodigo").text(`Semilla: ${SEMILLA}`);
+  //"ABCD"[0] = A, ABCD[1] = B, ABCD[2] = C, ABCD[3] = D. 
+  //si VARIANTE es 0 mostramos A, si es 1 mostramos B, etc.
+  $("#etiquetaVariante").text(`Política ${"ABCD"[VARIANTE]} (variante ${VARIANTE})`);
+  $("#etiquetaLimite").text(`Máximo: ${MAX_UNIDADES} plazas`);
+  $("#etiquetaRecargo").text(`Recargo: ${RECARGO_PORCENTAJE}%`);
+  $("#etiquetaTiempo").text(`Validez: ${SEGUNDOS_VALIDEZ}s`);
+  $("#descripcionPerfil").text(PERFIL.descripcion);
 }
 
 // TODO A2: actualizar los tres indicadores de operaciones confirmadas.

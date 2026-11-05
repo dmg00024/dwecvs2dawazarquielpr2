@@ -10,7 +10,58 @@ function precioCentimos(servicio) {
 // Obligatorio comprobar servicio, turno, vacío, NaN, decimales, [1, limite]
 // Y la restricción de la temática personal. Además, el perfil no puede quedarse sin personalizar.
 function validarSolicitud(servicio, cantidadTexto, turno, limite, tema) {
-  return "Pendiente de implementar validación.";
+  if (PERFIL.identificador.trim() === "" || PERFIL.identificador === "cambia-este-id") {
+    return "Tienes que personalizar tu perfil en js/perfil.js antes de cotizar.";
+  }
+  if (precioCentimos(servicio) === 0) {
+    return "Elige un servicio.";
+  }
+  if (turno !== "manana" && turno !== "tarde") {
+    return "Elige una franja: mañana o tarde.";
+  }
+
+  const texto = String(cantidadTexto ?? "").trim();
+  if (texto === "") {
+    return "Indica cuántas unidades quieres.";
+  }
+  const cantidad = Number(texto);
+  if (Number.isNaN(cantidad)) {
+    return "Las unidades tienen que ser un número.";
+  }
+  if (!Number.isInteger(cantidad)) {
+    return "Las unidades tienen que ser un número entero, sin decimales.";
+  }
+  if (cantidad < 1) {
+    return "Como mínimo tienes que pedir 1 unidad.";
+  }
+  if (cantidad > limite) {
+    return `Como máximo puedes pedir ${limite} unidades.`;
+  }
+
+  switch (tema) {
+    case "tecnologia":
+      if (servicio === "premium" && cantidad < 2) {
+        return "En tecnología el servicio premium necesita al menos 2 unidades.";
+      }
+      break;
+    case "deporte":
+      if (servicio === "basico" && turno === "tarde") {
+        return "En deporte el servicio básico no se puede contratar por la tarde.";
+      }
+      break;
+    case "musica":
+      if (servicio === "estandar" && turno === "tarde" && cantidad > 3) {
+        return "En música el servicio estándar de tarde admite como máximo 3 unidades.";
+      }
+      break;
+    case "cine":
+      if (servicio === "premium" && cantidad % 2 !== 0) {
+        return "En cine el servicio premium necesita un número par de unidades.";
+      }
+      break;
+  }
+
+  return "";
 }
 
 // TODO M3: aplicar EXACTAMENTE la política que corresponda a variante (0-3).

@@ -2,7 +2,8 @@
 
 // TODO M1: según el servicio, devolver el precio en céntimos (1150, 1925, 3275).
 function precioCentimos(servicio) {
-  return 0;
+  const precios = { basico: 1150, estandar: 1925, premium: 3275 };
+  return Object.hasOwn(precios, servicio) ? precios[servicio] : 0;
 }
 
 // TODO M2: devolver "" si todo es válido, o un MENSAJE claro si hay error.

@@ -88,7 +88,8 @@ function calcularDescuento(subtotal, cantidad, servicio, turno, variante) {
 
 // TODO M4: calcular el recargo porcentual sobre el SUBTOTAL, con redondeo.
 function calcularRecargo(subtotal, porcentaje) {
-  return 0;
+  const recargo = subtotal * porcentaje / 100;
+  return Math.round(recargo);
 }
 
 // TODO M5: DWEC-IDENTIFICADOR-0001 (secuencia de cuatro cifras como mínimo).

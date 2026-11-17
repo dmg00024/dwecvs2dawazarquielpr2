@@ -8,6 +8,8 @@ function precioCentimos(servicio) {
   else if (servicio === "estándar") {
     return 1925;
   }
+
+
   else if (servicio === "premium") {
     return 3275;
   }
@@ -21,7 +23,37 @@ function precioCentimos(servicio) {
 // Y la restricción de la temática personal. Además, el perfil no puede quedarse sin personalizar.
 
 function validarSolicitud(servicio, cantidadTexto, turno, limite, tema) {
-  return "Pendiente de implementar validación.";
+  const temaValido = ["tecnologia", "deporte", "musica", "cine"];
+  if (PERFIL.identificador === "" || PERFIL.tema === "") {
+    return "Error: debes personalizar tu perfil.";
+  }
+
+  if (servicio === "") {
+    return "Error: debes seleccionar un servicio.";
+  }
+
+  if (turno === "") {
+    return "Error: debes seleccionar un turno.";
+  }
+
+  if(cantidadTexto === "") {
+    return "Error: debes introducir una cantidad.";
+  }
+  const cantidad = Number(cantidadTexto);
+
+  if (!Number.isInteger(cantidad)) {
+    return "Error: la cantidad debe ser un número entero.";
+  }
+
+  if (cantidad < 1 || cantidad > limite) {
+    return "Error: la cantidad debe estar entre 1 y ${limite}.";
+  }
+
+  if (tema === "musica" && servicio === "premium" && turno === "mañana") {
+    return "Error: tu tematica ${tema} no está disponible para el servicio ${servicio}"
+              + " en el turno de ${turno}.";
+  }
+  return "";
 }
 
 // TODO M3: aplicar EXACTAMENTE la política que corresponda a variante (0-3).

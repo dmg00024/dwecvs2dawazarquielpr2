@@ -67,15 +67,20 @@ function guardarHistorico() {
 function detenerReloj() {
 
   clearInterval(idIntervalo);
-  idIntervalo = null;  
+  idIntervalo = null;
   finCotizacion = 0;
-                  
+
 }
 
 // TODO A6: reiniciar las cuatro cifras de la cotización y desactivar Confirmar.
 function vaciarResumenCotizacion() {
-
-
+  $("#subtotal").text("—");
+  $("#descuento").text("—");
+  $("#recargo").text("—");
+  $("#total").text("—");
+  $("#confirmar").prop("disabled", true);
+  $("#razonDescuento").text("La política de descuento aparecerá al cotizar.");
+  totalPendiente = 0;
 }
 
 // TODO A7: actualizar estado y habilitar Confirmar SOLO en estado COTIZADA.

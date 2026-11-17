@@ -31,7 +31,17 @@ function actualizarResumen() {
 
 // TODO A3: leer los tres valores de localStorage de este perfil, sanearlos,
 // y llamar a actualizarResumen(). Si no existen, usar 0, 0, "—".
-function recuperarHistorico() {}
+function recuperarHistorico() {
+  const ops = Number(localStorage.getItem(PREFIJO_STORAGE + "operaciones"));
+  const acu = Number(localStorage.getItem(PREFIJO_STORAGE + "acumulado"));
+  const ref = localStorage.getItem(PREFIJO_STORAGE + "ultimaReferencia");
+
+  operaciones = Number.isInteger(ops) && ops >= 0 ? ops : 0;
+  acumulado = Number.isInteger(acu) && acu >= 0 ? acu : 0;
+  ultimaReferencia = ref && operaciones > 0 ? ref : "—";
+
+  actualizarResumen();
+}
 
 // TODO A4: guardar en localStorage operaciones, acumulado y ultimaReferencia.
 function guardarHistorico() {}
@@ -67,6 +77,7 @@ function alternarTema() {}
 
 $(document).ready(function () {
   mostrarPerfil();
+  recuperarHistorico();
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.

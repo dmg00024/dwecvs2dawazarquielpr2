@@ -116,7 +116,41 @@ function actualizarCuentaAtras() {
 
 // TODO A10: validar, calcular subtotal/descuento/recargo/total en céntimos,
 // mostrar desglose, iniciar cuenta atrás y pasar a COTIZADA.
-function cotizar() {}
+function cotizar() {
+  const servicio = $("#servicio").val();
+  const cantidadTexto = $("#cantidad").val();
+  const turno = $("#turno").val();
+
+  detenerReloj();
+  vaciarResumenCotizacion();
+
+  const error = validarSolicitud(servicio, cantidadTexto, turno, MAX_UNIDADES, PERFIL.tema);
+  if (error !== "") {
+    cambiarEstado("SIN_COTIZACION");
+    $("#temporizador").text("-- s");
+    $("#mensaje").removeClass("exito").addClass("error").text(error);
+    return;
+  }
+
+  const cantidad = Number(cantidadTexto);
+  const subtotal = precioCentimos(servicio) * cantidad;
+  const descuento = calcularDescuento(subtotal, cantidad, servicio, turno, VARIANTE);
+  const recargo = calcularRecargo(subtotal, RECARGO_PORCENTAJE);
+  totalPendiente = subtotal - descuento + recargo;
+
+  $("#subtotal").text(euros(subtotal));
+  $("#descuento").text(`-${euros(descuento)}`);
+  $("#recargo").text(`+${euros(recargo)}`);
+  $("#total").text(euros(totalPendiente));
+  $("#razonDescuento").text(`Política ${"ABCD"[VARIANTE]} (variante ${VARIANTE}) con ${cantidad} plazas: descuento de ${euros(descuento)}. Recargo del ${RECARGO_PORCENTAJE} % sobre el subtotal.`);
+
+  finCotizacion = Date.now() + SEGUNDOS_VALIDEZ * 1000;
+  cambiarEstado("COTIZADA");
+  actualizarCuentaAtras();
+  idIntervalo = setInterval(actualizarCuentaAtras, 250);
+
+  $("#mensaje").removeClass("error").addClass("exito").text(`Presupuesto listo. Tienes ${SEGUNDOS_VALIDEZ} segundos para confirmarlo.`);
+}
 
 // TODO A11: solo confirmar una cotización vigente. Actualizar histórico,
 // referencia secuencial y persistencia SIN contabilizar duplicados.

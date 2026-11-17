@@ -62,12 +62,14 @@ function calcularDescuento(subtotal, cantidad, servicio, turno, variante) {
 
 // TODO M4: calcular el recargo porcentual sobre el SUBTOTAL, con redondeo.
 function calcularRecargo(subtotal, porcentaje) {
-  return 0;
+  return Math.round((subtotal * porcentaje) / 100);
 }
 
 // TODO M5: DWEC-IDENTIFICADOR-0001 (secuencia de cuatro cifras como mínimo).
 function construirReferencia(identificador, contador) {
-  return "PENDIENTE";
+  const idMayus = String(identificador).toUpperCase();
+  const numero = String(contador).padStart(4, "0");
+  return `DWEC-${idMayus}-${numero}`;
 }
 
 // TODO M6: formatear 12345 céntimos como "123,45 €".

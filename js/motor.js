@@ -19,7 +19,53 @@ function precioCentimos(servicio) {
 // Obligatorio comprobar servicio, turno, vacío, NaN, decimales, [1, limite]
 // Y la restricción de la temática personal. Además, el perfil no puede quedarse sin personalizar.
 function validarSolicitud(servicio, cantidadTexto, turno, limite, tema) {
-  return "Pendiente de implementar validación.";
+  const temasValidos = ["tecnologia", "deporte", "musica", "cine"];
+  if (PERFIL.identificador === "" || PERFIL.identificador === "cambia-este-id") {
+    return "El perfil está sin personalizar: completa js/perfil.js.";
+  }
+  if (!temasValidos.includes(tema)) {
+    return "La temática del perfil no es válida.";
+  }
+
+  if (precioCentimos(servicio) === 0) {
+    return "Selecciona un servicio.";
+  }
+  if (turno !== "manana" && turno !== "tarde") {
+    return "Elige una franja: mañana o tarde.";
+  }
+
+  const texto = String(cantidadTexto).trim();
+  if (texto === "") {
+    return "Indica cuántas unidades quieres (no puede estar vacío ni tener letras).";
+  }
+  const cantidad = Number(texto);
+  if (Number.isNaN(cantidad)) {
+    return "Las unidades tienen que ser un número.";
+  }
+  if (!Number.isInteger(cantidad)) {
+    return "Las unidades tienen que ser un número entero, sin decimales.";
+  }
+  if (cantidad < 1) {
+    return "Tienes que pedir al menos 1 unidad.";
+  }
+  if (cantidad > limite) {
+    return `El máximo de tu perfil es de ${limite} unidades.`;
+  }
+
+  if (tema === "tecnologia" && servicio === "premium" && cantidad < 2) {
+    return "En tecnología, el servicio prémium exige al menos 2 unidades.";
+  }
+  if (tema === "deporte" && servicio === "basico" && turno === "tarde") {
+    return "En deporte, el servicio básico no se ofrece por la tarde.";
+  }
+  if (tema === "musica" && servicio === "estandar" && turno === "tarde" && cantidad > 3) {
+    return "En música, el estándar de tarde admite como máximo 3 unidades.";
+  }
+  if (tema === "cine" && servicio === "premium" && cantidad % 2 !== 0) {
+    return "En cine, el servicio prémium exige una cantidad par de unidades.";
+  }
+
+  return "";
 }
 
 // TODO M3: aplicar EXACTAMENTE la política que corresponda a variante (0-3).

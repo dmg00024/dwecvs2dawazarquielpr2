@@ -197,10 +197,19 @@ function cancelar() {
 }
 
 // TODO A13: tema oscuro/claro con persistencia localStorage.
-function alternarTema() {}
+function alternarTema() {
+  const actual = $("html").attr("data-theme");
+  const nuevo = actual === "claro" ? "oscuro" : "claro";
+  $("html").attr("data-theme", nuevo);
+  localStorage.setItem(`${PREFIJO_STORAGE}modoColor`, nuevo);
+}
 
 $(document).ready(function () {
   mostrarPerfil();
+  const modoGuardado = localStorage.getItem(`${PREFIJO_STORAGE}modoColor`);
+  if (modoGuardado === "claro" || modoGuardado === "oscuro") {
+    $("html").attr("data-theme", modoGuardado);
+  }
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.

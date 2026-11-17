@@ -12,7 +12,35 @@ function precioCentimos(servicio) {
 // Obligatorio comprobar servicio, turno, vacío, NaN, decimales, [1, limite]
 // Y la restricción de la temática personal. Además, el perfil no puede quedarse sin personalizar.
 function validarSolicitud(servicio, cantidadTexto, turno, limite, tema) {
-  return "Pendiente de implementar validación.";
+  if (PERFIL.identificador === "" || PERFIL.identificador === "cambia-este-id") {
+    return "Debes poner tu identificador en js/perfil.js.";
+  }
+  if (servicio === "") return "Debes elegir un servicio.";
+  if (turno === "") return "Debes elegir una franja (mañana o tarde).";
+  if (cantidadTexto.trim() === "") return "Debes indicar cuántas plazas quieres.";
+
+  const cantidad = Number(cantidadTexto);
+  if (isNaN(cantidad) || !Number.isInteger(cantidad)) {
+    return "La cantidad debe ser un número entero sin decimales.";
+  }
+  if (cantidad < 1 || cantidad > limite) {
+    return `Las plazas deben estar entre 1 y ${limite}.`;
+  }
+
+  if (tema === "tecnologia" && servicio === "premium" && cantidad < 2) {
+    return "En tecnología no se permite prémium con menos de 2 plazas.";
+  }
+  if (tema === "deporte" && servicio === "basico" && turno === "tarde") {
+    return "En deporte no se permite básico por la tarde.";
+  }
+  if (tema === "musica" && servicio === "estandar" && turno === "tarde" && cantidad > 3) {
+    return "En música no se permite estándar por la tarde con más de 3 plazas.";
+  }
+  if (tema === "cine" && servicio === "premium" && cantidad % 2 !== 0) {
+    return "En cine no se permite prémium con plazas impares.";
+  }
+
+  return "";
 }
 
 // TODO M3: aplicar EXACTAMENTE la política que corresponda a variante (0-3).

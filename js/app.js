@@ -103,7 +103,15 @@ function invalidarCotizacion(motivo) {
 
 // TODO A9: mostrar segundos restantes, controlar caducidad e impedir confirmar.
 function actualizarCuentaAtras() {
-
+  const restante = Math.ceil((finCotizacion - Date.now()) / 1000);
+  if (restante <= 0) {
+    detenerReloj();
+    cambiarEstado("CADUCADA");
+    $("#temporizador").text("0 s");
+    $("#mensaje").text("La cotización ha caducado. Vuelve a cotizar.");
+  } else {
+    $("#temporizador").text(`${restante} s`);
+  }
 
 }
 

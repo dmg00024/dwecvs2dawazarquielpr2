@@ -66,7 +66,10 @@ function guardarHistorico() {
 // TODO A5: detener el intervalo previo y reiniciar el instante de caducidad.
 function detenerReloj() {
 
-
+  clearInterval(idIntervalo);
+  idIntervalo = null;  
+  finCotizacion = 0;
+                  
 }
 
 // TODO A6: reiniciar las cuatro cifras de la cotización y desactivar Confirmar.
@@ -76,7 +79,10 @@ function vaciarResumenCotizacion() {
 }
 
 // TODO A7: actualizar estado y habilitar Confirmar SOLO en estado COTIZADA.
-function cambiarEstado(nuevo) { estado = nuevo; }
+function cambiarEstado(nuevo) {
+  estado = nuevo;
+
+}
 
 // TODO A8: invalidar una cotización activa si cambian campos del formulario.
 function invalidarCotizacion(motivo) {
@@ -93,7 +99,7 @@ function actualizarCuentaAtras() {
 // TODO A10: validar, calcular subtotal/descuento/recargo/total en céntimos,
 // mostrar desglose, iniciar cuenta atrás y pasar a COTIZADA.
 function cotizar() {
-
+  detenerReloj();
 
 }
 

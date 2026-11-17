@@ -96,7 +96,23 @@ function invalidarCotizacion(motivo) {
 }
 
 // TODO A9: mostrar segundos restantes, controlar caducidad e impedir confirmar.
-function actualizarCuentaAtras() {}
+function actualizarCuentaAtras() {
+  if (estado !== "COTIZADA") {
+    return;
+  }
+  const restantes = Math.max(0, Math.ceil((finCotizacion - Date.now()) / 1000));
+  $("#temporizador").text(`${restantes} s`);
+
+  if (restantes === 0) {
+    detenerReloj();
+    vaciarResumenCotizacion();
+    cambiarEstado("CADUCADA");
+    $("#mensaje")
+      .removeClass("exito")
+      .addClass("error")
+      .text("Se ha acabado el tiempo y el presupuesto ha caducado. Vuelve a pulsar «Cotizar».");
+  }
+}
 
 // TODO A10: validar, calcular subtotal/descuento/recargo/total en céntimos,
 // mostrar desglose, iniciar cuenta atrás y pasar a COTIZADA.

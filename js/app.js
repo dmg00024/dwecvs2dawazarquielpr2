@@ -30,46 +30,95 @@ function actualizarResumen() {
 }
 // TODO A3: leer los tres valores de localStorage de este perfil, sanearlos,
 // y llamar a actualizarResumen(). Si no existen, usar 0, 0, "—".
-function recuperarHistorico() {}
+function recuperarHistorico() {
+  const numOperaciones = Number(localStorage.getItem(`${PREFIJO_STORAGE}operaciones`));
+  if (Number.isInteger(numOperaciones) && numOperaciones >= 0) {
+    operaciones = numOperaciones;
+  } else {
+    operaciones = 0;
+  }
+
+  const numAcumulado = Number(localStorage.getItem(`${PREFIJO_STORAGE}acumulado`));
+  if (Number.isInteger(numAcumulado) && numAcumulado >= 0) {
+    acumulado = numAcumulado;
+  } else {
+    acumulado = 0;
+  }
+
+  const referencia = localStorage.getItem(`${PREFIJO_STORAGE}ultimaReferencia`);
+  if (referencia === null || referencia === "") {
+    ultimaReferencia = "—";
+  } else {
+    ultimaReferencia = referencia;
+  }
+
+  actualizarResumen();
+}
 
 // TODO A4: guardar en localStorage operaciones, acumulado y ultimaReferencia.
 function guardarHistorico() {
+  //localStorage.setItem(nombre, valor)
   localStorage.setItem(`${PREFIJO_STORAGE}operaciones`, operaciones);
   localStorage.setItem(`${PREFIJO_STORAGE}acumulado`, acumulado);
   localStorage.setItem(`${PREFIJO_STORAGE}ultimaReferencia`, ultimaReferencia);
 }
 
 // TODO A5: detener el intervalo previo y reiniciar el instante de caducidad.
-function detenerReloj() {}
+function detenerReloj() {
+
+
+}
 
 // TODO A6: reiniciar las cuatro cifras de la cotización y desactivar Confirmar.
-function vaciarResumenCotizacion() {}
+function vaciarResumenCotizacion() {
+
+
+}
 
 // TODO A7: actualizar estado y habilitar Confirmar SOLO en estado COTIZADA.
 function cambiarEstado(nuevo) { estado = nuevo; }
 
 // TODO A8: invalidar una cotización activa si cambian campos del formulario.
-function invalidarCotizacion(motivo) {}
+function invalidarCotizacion(motivo) {
+
+
+}
 
 // TODO A9: mostrar segundos restantes, controlar caducidad e impedir confirmar.
-function actualizarCuentaAtras() {}
+function actualizarCuentaAtras() {
+
+
+}
 
 // TODO A10: validar, calcular subtotal/descuento/recargo/total en céntimos,
 // mostrar desglose, iniciar cuenta atrás y pasar a COTIZADA.
-function cotizar() {}
+function cotizar() {
+
+
+}
 
 // TODO A11: solo confirmar una cotización vigente. Actualizar histórico,
 // referencia secuencial y persistencia SIN contabilizar duplicados.
-function confirmar() {}
+function confirmar() {
+
+
+}
 
 // TODO A12: cancelar cotización sin alterar histórico confirmado.
-function cancelar() {}
+function cancelar() {
+
+
+}
 
 // TODO A13: tema oscuro/claro con persistencia localStorage.
-function alternarTema() {}
+function alternarTema() {
+
+
+}
 
 $(document).ready(function () {
   mostrarPerfil();
+  recuperarHistorico();
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.

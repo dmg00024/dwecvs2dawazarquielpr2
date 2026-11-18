@@ -11,51 +11,244 @@ let ultimaReferencia = "—";
 
 // TODO A1: mostrar los datos derivados del perfil en la cabecera.
 function mostrarPerfil() {
+  const politica = "ABCD"[VARIANTE];
   $("#nombrePerfil").text(`${PERFIL.identificador} · ${PERFIL.tema}`);
+  $("#descripcionPerfil").text(PERFIL.descripcion);
+  $("#etiquetaCodigo").text(`Semilla ${SEMILLA}`);
+  $("#etiquetaVariante").text(`Política ${politica} (variante ${VARIANTE})`);
+  $("#etiquetaLimite").text(`Máximo ${MAX_UNIDADES} plazas`);
+  $("#etiquetaRecargo").text(`Recargo ${RECARGO_PORCENTAJE} %`);
+  $("#etiquetaTiempo").text(`${SEGUNDOS_VALIDEZ} s para confirmar`);
 }
 
 // TODO A2: actualizar los tres indicadores de operaciones confirmadas.
-function actualizarResumen() {}
+function actualizarResumen() {
+  $("#operaciones").text(operaciones);
+  $("#acumulado").text(euros(acumulado));
+  $("#ultima").text(ultimaReferencia);
+}
 
 // TODO A3: leer los tres valores de localStorage de este perfil, sanearlos,
 // y llamar a actualizarResumen(). Si no existen, usar 0, 0, "—".
-function recuperarHistorico() {}
+function recuperarHistorico() {
+  const opsGuardadas = Number(localStorage.getItem(`${PREFIJO_STORAGE}operaciones`));
+  const acumGuardado = Number(localStorage.getItem(`${PREFIJO_STORAGE}acumulado`));
+  const refGuardada = localStorage.getItem(`${PREFIJO_STORAGE}ultimaReferencia`);
+
+  operaciones = Number.isInteger(opsGuardadas) && opsGuardadas > 0 ? opsGuardadas : 0;
+  acumulado = Number.isInteger(acumGuardado) && acumGuardado > 0 ? acumGuardado : 0;
+  ultimaReferencia = refGuardada && refGuardada.startsWith("DWEC-") ? refGuardada : "—";
+
+  actualizarResumen();
+}
 
 // TODO A4: guardar en localStorage operaciones, acumulado y ultimaReferencia.
-function guardarHistorico() {}
+function guardarHistorico() {
+  localStorage.setItem(`${PREFIJO_STORAGE}operaciones`, String(operaciones));
+  localStorage.setItem(`${PREFIJO_STORAGE}acumulado`, String(acumulado));
+  localStorage.setItem(`${PREFIJO_STORAGE}ultimaReferencia`, ultimaReferencia);
+}
 
 // TODO A5: detener el intervalo previo y reiniciar el instante de caducidad.
-function detenerReloj() {}
+function detenerReloj() {
+  if (idIntervalo !== null) {
+    clearInterval(idIntervalo);
+    idIntervalo = null;
+  }
+  finCotizacion = 0;
+}
 
 // TODO A6: reiniciar las cuatro cifras de la cotización y desactivar Confirmar.
-function vaciarResumenCotizacion() {}
+function vaciarResumenCotizacion() {
+  $("#subtotal, #descuento, #recargo, #total").text("—");
+  $("#razonDescuento").text("La política de descuento aparecerá al cotizar.");
+  totalPendiente = 0;
+  $("#confirmar").prop("disabled", true);
+}
 
 // TODO A7: actualizar estado y habilitar Confirmar SOLO en estado COTIZADA.
-function cambiarEstado(nuevo) { estado = nuevo; }
+function cambiarEstado(nuevo) {
+  const textos = {
+    SIN_COTIZACION: "SIN COTIZACIÓN",
+    COTIZADA: "COTIZADA",
+    CONFIRMADA: "CONFIRMADA",
+    CADUCADA: "CADUCADA",
+    INVALIDADA: "INVALIDADA",
+    CANCELADA: "CANCELADA"
+  };
+  estado = nuevo;
+  $("#estado").text(textos[nuevo] ?? nuevo);
+  $("#confirmar").prop("disabled", estado !== "COTIZADA");
+}
 
 // TODO A8: invalidar una cotización activa si cambian campos del formulario.
-function invalidarCotizacion(motivo) {}
+function invalidarCotizacion(motivo) {
+  if (estado !== "COTIZADA") {
+    return;
+  }
+  detenerReloj();
+  vaciarResumenCotizacion();
+  cambiarEstado("INVALIDADA");
+  $("#temporizador").text("-- s");
+  $("#mensaje")
+    .removeClass("exito error")
+    .text(`${motivo || "Has cambiado algún dato."} Vuelve a pulsar «Cotizar».`);
+}
 
 // TODO A9: mostrar segundos restantes, controlar caducidad e impedir confirmar.
-function actualizarCuentaAtras() {}
+function actualizarCuentaAtras() {
+  if (estado !== "COTIZADA") {
+    return;
+  }
+  const restantes = Math.max(0, Math.ceil((finCotizacion - Date.now()) / 1000));
+  $("#temporizador").text(`${restantes} s`);
+
+  if (restantes === 0) {
+    detenerReloj();
+    vaciarResumenCotizacion();
+    cambiarEstado("CADUCADA");
+    $("#mensaje")
+      .removeClass("exito")
+      .addClass("error")
+      .text("Se ha acabado el tiempo y el presupuesto ha caducado. Vuelve a pulsar «Cotizar».");
+  }
+}
 
 // TODO A10: validar, calcular subtotal/descuento/recargo/total en céntimos,
 // mostrar desglose, iniciar cuenta atrás y pasar a COTIZADA.
-function cotizar() {}
+function cotizar() {
+  const servicio = $("#servicio").val();
+  const cantidadTexto = $("#cantidad").val();
+  const turno = $("#turno").val();
+
+  detenerReloj();
+  vaciarResumenCotizacion();
+
+  const error = validarSolicitud(servicio, cantidadTexto, turno, MAX_UNIDADES, PERFIL.tema);
+  if (error !== "") {
+    cambiarEstado("SIN_COTIZACION");
+    $("#temporizador").text("-- s");
+    $("#mensaje").removeClass("exito").addClass("error").text(error);
+    return;
+  }
+
+  const cantidad = Number(cantidadTexto);
+  const subtotal = precioCentimos(servicio) * cantidad;
+  const descuento = calcularDescuento(subtotal, cantidad, servicio, turno, VARIANTE);
+  const recargo = calcularRecargo(subtotal, RECARGO_PORCENTAJE);
+  totalPendiente = subtotal - descuento + recargo;
+
+  $("#subtotal").text(euros(subtotal));
+  $("#descuento").text(`-${euros(descuento)}`);
+  $("#recargo").text(`+${euros(recargo)}`);
+  $("#total").text(euros(totalPendiente));
+  $("#razonDescuento").text(`Política ${"ABCD"[VARIANTE]} (variante ${VARIANTE}) con ${cantidad} plazas: descuento de ${euros(descuento)}. Recargo del ${RECARGO_PORCENTAJE} % sobre el subtotal.`);
+
+  finCotizacion = Date.now() + SEGUNDOS_VALIDEZ * 1000;
+  cambiarEstado("COTIZADA");
+  actualizarCuentaAtras();
+  idIntervalo = setInterval(actualizarCuentaAtras, 250);
+
+  $("#mensaje").removeClass("error").addClass("exito").text(`Presupuesto listo. Tienes ${SEGUNDOS_VALIDEZ} segundos para confirmarlo.`);
+}
 
 // TODO A11: solo confirmar una cotización vigente. Actualizar histórico,
 // referencia secuencial y persistencia SIN contabilizar duplicados.
-function confirmar() {}
+function confirmar() {
+  if (estado !== "COTIZADA" || totalPendiente <= 0) {
+    if (estado !== "CONFIRMADA") {
+      $("#mensaje").removeClass("exito").addClass("error").text("No hay ningún presupuesto vigente para confirmar.");
+    }
+    return;
+  }
+  if (Date.now() >= finCotizacion) {
+    actualizarCuentaAtras();
+    return;
+  }
+
+  const importe = totalPendiente;
+  detenerReloj();
+  cambiarEstado("CONFIRMADA");
+
+  operaciones++;
+  acumulado += importe;
+  ultimaReferencia = construirReferencia(PERFIL.identificador, operaciones);
+  totalPendiente = 0;
+
+  guardarHistorico();
+  actualizarResumen();
+
+  $("#temporizador").text("-- s");
+  $("#referencia").text(`Operación confirmada: ${ultimaReferencia} por ${euros(importe)}.`);
+  $("#mensaje").removeClass("error").addClass("exito").text(`Presupuesto confirmado. Tu referencia es ${ultimaReferencia}.`);
+}
 
 // TODO A12: cancelar cotización sin alterar histórico confirmado.
-function cancelar() {}
+function cancelar() {
+  if (estado !== "COTIZADA") {
+    $("#mensaje").removeClass("exito error").text("No hay ninguna cotización activa que cancelar.");
+    return;
+  }
+  detenerReloj();
+  vaciarResumenCotizacion();
+  cambiarEstado("CANCELADA");
+  $("#temporizador").text("-- s");
+  $("#mensaje").removeClass("exito error").text("Cotización cancelada. Tus operaciones confirmadas siguen igual.");
+}
 
 // TODO A13: tema oscuro/claro con persistencia localStorage.
-function alternarTema() {}
+function alternarTema() {
+  const actual = $("html").attr("data-theme");
+  const nuevo = actual === "claro" ? "oscuro" : "claro";
+  $("html").attr("data-theme", nuevo);
+  localStorage.setItem(`${PREFIJO_STORAGE}modoColor`, nuevo);
+}
 
 $(document).ready(function () {
   mostrarPerfil();
+  const modoGuardado = localStorage.getItem(`${PREFIJO_STORAGE}modoColor`);
+  if (modoGuardado === "claro" || modoGuardado === "oscuro") {
+    $("html").attr("data-theme", modoGuardado);
+  }
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.
+  recuperarHistorico();
+
+  $("#formPresupuesto").on("submit", function (evento) {
+    evento.preventDefault();
+    cotizar();
+  });
+  $("#confirmar").on("click", confirmar);
+  $("#cancelar").on("click", cancelar);
+  $("#cambiarTema").on("click", alternarTema);
+
+  $("#servicio").on("change", () => invalidarCotizacion("Has cambiado el servicio."));
+  $("#turno").on("change", () => invalidarCotizacion("Has cambiado la franja."));
+  $("#cantidad").on("input change", () => invalidarCotizacion("Has cambiado las unidades."));
+
+  $("#reiniciar").on("click", function () {
+    if (!confirm("¿Seguro que quieres borrar todo el histórico de operaciones?")) {
+      return;
+    }
+    operaciones = 0;
+    acumulado = 0;
+    ultimaReferencia = "—";
+    guardarHistorico();
+    actualizarResumen();
+    $("#referencia").text("Todavía no hay operación confirmada.");
+    $("#mensaje").removeClass("exito error").text("Histórico reiniciado.");
+  });
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
+  const turnoGuardado = sessionStorage.getItem(`${PREFIJO_STORAGE}turno`);
+  if (turnoGuardado === "manana" || turnoGuardado === "tarde") {
+    $("#turno").val(turnoGuardado);
+  }
+  $("#turno").on("change", function () {
+    const turno = $(this).val();
+    if (turno === "manana" || turno === "tarde") {
+      sessionStorage.setItem(`${PREFIJO_STORAGE}turno`, turno);
+    } else {
+      sessionStorage.removeItem(`${PREFIJO_STORAGE}turno`);
+    }
+  });
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.
 });

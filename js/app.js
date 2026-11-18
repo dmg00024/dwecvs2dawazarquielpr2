@@ -238,5 +238,17 @@ $(document).ready(function () {
     $("#mensaje").removeClass("exito error").text("Histórico reiniciado.");
   });
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
+  const turnoGuardado = sessionStorage.getItem(`${PREFIJO_STORAGE}turno`);
+  if (turnoGuardado === "manana" || turnoGuardado === "tarde") {
+    $("#turno").val(turnoGuardado);
+  }
+  $("#turno").on("change", function () {
+    const turno = $(this).val();
+    if (turno === "manana" || turno === "tarde") {
+      sessionStorage.setItem(`${PREFIJO_STORAGE}turno`, turno);
+    } else {
+      sessionStorage.removeItem(`${PREFIJO_STORAGE}turno`);
+    }
+  });
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.
 });

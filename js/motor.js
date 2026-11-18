@@ -25,7 +25,7 @@ function validarSolicitud(servicio, cantidadTexto, turno, limite, tema) {
 
   const texto = String(cantidadTexto ?? "").trim()
   if (texto === "") return "Indica cuántas plazas quieres."
-
+  if (!/^\d+$/.test(texto)) return "La cantidad debe ser un número entero positivo."
   const n = Number(texto)
   if (!Number.isInteger(n) || n < 1) {
     return "La cantidad debe ser un número entero positivo."

@@ -65,11 +65,9 @@ function guardarHistorico() {
 
 // TODO A5: detener el intervalo previo y reiniciar el instante de caducidad.
 function detenerReloj() {
-
   clearInterval(idIntervalo);
   idIntervalo = null;
   finCotizacion = 0;
-
 }
 
 // TODO A6: reiniciar las cuatro cifras de la cotización y desactivar Confirmar.
@@ -118,8 +116,44 @@ function actualizarCuentaAtras() {
 // TODO A10: validar, calcular subtotal/descuento/recargo/total en céntimos,
 // mostrar desglose, iniciar cuenta atrás y pasar a COTIZADA.
 function cotizar() {
+  // Parar el reloj de una cotización anterior para no tener dos a la vez (A5)
   detenerReloj();
 
+  // Leer el formulario (.val() siempre devuelve texto)
+  const servicio = $("#servicio").val();
+  const cantidadTexto = $("#cantidad").val();
+  const turno = $("#turno").val();
+
+  // Validar con M2: si hay error, mostrarlo, dejar la pantalla limpia y salir
+  const error = validarSolicitud(servicio, cantidadTexto, turno, MAX_UNIDADES, PERFIL.tema);
+  if (error !== "") {
+    $("#mensaje").text(error);
+    vaciarResumenCotizacion();
+    cambiarEstado("SIN_COTIZACION");
+    return;
+  }
+
+  // Calcular en céntimos con M1, M3 y M4; guardar el total para confirmar (A11)
+  const cantidad = Number(cantidadTexto);
+  const subtotal = precioCentimos(servicio) * cantidad;
+  const descuento = calcularDescuento(subtotal, cantidad, servicio, turno, VARIANTE);
+  const recargo = calcularRecargo(subtotal, RECARGO_PORCENTAJE);
+  const total = subtotal - descuento + recargo;
+  totalPendiente = total;
+
+  // Mostrar el desglose en euros con M6 (solo se pasa a euros para mostrar)
+  $("#subtotal").text(euros(subtotal));
+  $("#descuento").text(`−${euros(descuento)}`);
+  $("#recargo").text(`+${euros(recargo)}`);
+  $("#total").text(euros(total));
+  $("#razonDescuento").text(`Política ${"ABCD"[VARIANTE]} con ${cantidad} plazas: descuento de ${euros(descuento)}.`);
+
+  // Arrancar la cuenta atrás (A9) y pasar a COTIZADA, que activa Confirmar (A7)
+  finCotizacion = Date.now() + SEGUNDOS_VALIDEZ * 1000;
+  idIntervalo = setInterval(actualizarCuentaAtras, 1000);
+  actualizarCuentaAtras();
+  cambiarEstado("COTIZADA");
+  $("#mensaje").text(`Presupuesto calculado. Tienes ${SEGUNDOS_VALIDEZ} s para confirmar.`);
 }
 
 // TODO A11: solo confirmar una cotización vigente. Actualizar histórico,

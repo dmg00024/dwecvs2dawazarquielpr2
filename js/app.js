@@ -12,6 +12,12 @@ let ultimaReferencia = "—";
 // TODO A1: mostrar los datos derivados del perfil en la cabecera.
 function mostrarPerfil() {
   $("#nombrePerfil").text(`${PERFIL.identificador} · ${PERFIL.tema}`);
+  $("#descripcionPerfil").text(PERFIL.descripcion);
+  $("#etiquetaCodigo").text(`SEMILLA ${SEMILLA}`);
+  $("#etiquetaVariante").text(`Política ${"ABCD".charAt(VARIANTE)}`);
+  $("#etiquetaLimite").text(`Máx. ${MAX_UNIDADES} plazas`);
+  $("#etiquetaRecargo").text(`Recargo ${RECARGO_PORCENTAJE} %`);
+  $("#etiquetaTiempo").text(`${SEGUNDOS_VALIDEZ} s`);
 }
 
 // TODO A2: actualizar los tres indicadores de operaciones confirmadas.

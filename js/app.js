@@ -89,7 +89,24 @@ function vaciarResumenCotizacion() {
 }
 
 // TODO A7: actualizar estado y habilitar Confirmar SOLO en estado COTIZADA.
-function cambiarEstado(nuevo) { estado = nuevo; }
+function cambiarEstado(nuevo) {
+  estado = nuevo;
+
+  const etiquetas = {
+    SIN_COTIZACION: "SIN COTIZACIÓN",
+    COTIZADA: "COTIZADA",
+    CONFIRMADA: "CONFIRMADA",
+    CADUCADA: "CADUCADA",
+    CANCELADA: "CANCELADA"
+  };
+
+  $("#estado").text(etiquetas[nuevo] || nuevo);
+  $("#confirmar").prop("disabled", nuevo !== "COTIZADA");
+
+  if (nuevo !== "COTIZADA") {
+    $("#temporizador").text("-- s");
+  }
+}
 
 // TODO A8: invalidar una cotización activa si cambian campos del formulario.
 function invalidarCotizacion(motivo) {}

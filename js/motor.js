@@ -59,7 +59,45 @@ function validarSolicitud(servicio, cantidadTexto, turno, limite, tema) {
 // TODO M3: aplicar EXACTAMENTE la política que corresponda a variante (0-3).
 // Trabajar siempre en céntimos y aplicar Math.round cuando haya porcentaje.
 function calcularDescuento(subtotal, cantidad, servicio, turno, variante) {
-  return 0;
+  const politica = Number(variante);
+
+  // Política D: importe fijo por parejas, con tope del 20 %
+  if (politica === 3) {
+    const parejas = Math.floor(cantidad / 2);
+    const descuento = parejas * 175;               // 1,75 € = 175 céntimos
+    const tope = Math.floor(subtotal * 20 / 100);  // redondeo hacia abajo
+    return Math.min(descuento, tope);
+  }
+
+  // Políticas A, B y C: porcentaje
+  let porcentaje = 0;
+
+  switch (politica) {
+    case 0:
+      if (cantidad >= 7) {
+        porcentaje = 13;
+      } else if (cantidad >= 4) {
+        porcentaje = 8;
+      }
+      break;
+    case 1:
+      if (turno === "tarde") {
+        porcentaje += 9;
+      }
+      if (cantidad >= 5) {
+        porcentaje += 4;
+      }
+      break;
+    case 2:
+      if (servicio === "premium") {
+        porcentaje = 12;
+      } else if (cantidad >= 6) {
+        porcentaje = 6;
+      }
+      break;
+  }
+
+  return Math.round(subtotal * porcentaje / 100);
 }
 
 // TODO M4: calcular el recargo porcentual sobre el SUBTOTAL, con redondeo.

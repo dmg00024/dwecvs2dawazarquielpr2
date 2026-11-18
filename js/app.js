@@ -211,6 +211,32 @@ $(document).ready(function () {
     $("html").attr("data-theme", modoGuardado);
   }
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.
+  recuperarHistorico();
+
+  $("#formPresupuesto").on("submit", function (evento) {
+    evento.preventDefault();
+    cotizar();
+  });
+  $("#confirmar").on("click", confirmar);
+  $("#cancelar").on("click", cancelar);
+  $("#cambiarTema").on("click", alternarTema);
+
+  $("#servicio").on("change", () => invalidarCotizacion("Has cambiado el servicio."));
+  $("#turno").on("change", () => invalidarCotizacion("Has cambiado la franja."));
+  $("#cantidad").on("input change", () => invalidarCotizacion("Has cambiado las unidades."));
+
+  $("#reiniciar").on("click", function () {
+    if (!confirm("¿Seguro que quieres borrar todo el histórico de operaciones?")) {
+      return;
+    }
+    operaciones = 0;
+    acumulado = 0;
+    ultimaReferencia = "—";
+    guardarHistorico();
+    actualizarResumen();
+    $("#referencia").text("Todavía no hay operación confirmada.");
+    $("#mensaje").removeClass("exito error").text("Histórico reiniciado.");
+  });
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.
 });

@@ -159,8 +159,32 @@ function cotizar() {
 // TODO A11: solo confirmar una cotización vigente. Actualizar histórico,
 // referencia secuencial y persistencia SIN contabilizar duplicados.
 function confirmar() {
+  // Solo se puede confirmar en estado COTIZADA
+  if (estado !== "COTIZADA") {
+    return;
+  }
 
+  // Si ya ha pasado el instante de caducidad, caducar en vez de confirmar
+  if (Date.now() >= finCotizacion) {
+    actualizarCuentaAtras();
+    return;
+  }
 
+  detenerReloj();
+  cambiarEstado("CONFIRMADA");
+
+  // Sumar la operación al histórico, crear su referencia secuencial y guardarlo
+  operaciones = operaciones + 1;
+  acumulado = acumulado + totalPendiente;
+  ultimaReferencia = construirReferencia(PERFIL.identificador, operaciones);
+  totalPendiente = 0;
+  guardarHistorico();
+  actualizarResumen();
+
+  // Avisar al usuario
+  $("#temporizador").text("-- s");
+  $("#referencia").text(`Operación confirmada: ${ultimaReferencia}`);
+  $("#mensaje").text(`Presupuesto confirmado con la referencia ${ultimaReferencia}.`);
 }
 
 // TODO A12: cancelar cotización sin alterar histórico confirmado.

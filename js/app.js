@@ -9,9 +9,26 @@ let operaciones = 0;
 let acumulado = 0;
 let ultimaReferencia = "—";
 
+const K_OPERACIONES = PREFIJO_STORAGE + "operaciones";
+const K_ACUMULADO   = PREFIJO_STORAGE + "acumulado";
+const K_REFERENCIA  = PREFIJO_STORAGE + "ultimaReferencia";
+const K_TURNO       = PREFIJO_STORAGE + "turno";
+const K_TEMA        = "dwec_p02_tema";
+
 // TODO A1: mostrar los datos derivados del perfil en la cabecera.
 function mostrarPerfil() {
   $("#nombrePerfil").text(`${PERFIL.identificador} · ${PERFIL.tema}`);
+  const $chips = $(".chips").first();
+  if ($chips.length) {
+    $chips.empty().append(
+      $("<span>").text(`Semilla: ${SEMILLA}`),
+      $("<span>").text(`Variante: ${VARIANTE}`),
+      $("<span>").text(`Recargo: ${RECARGO_PORCENTAJE} %`),
+      $("<span>").text(`Máximo: ${MAX_UNIDADES}`),
+      $("<span>").text(`Validez: ${SEGUNDOS_VALIDEZ} s`)
+    );
+  }
+  $("#descripcionPerfil").text(PERFIL.descripcion);
 }
 
 // TODO A2: actualizar los tres indicadores de operaciones confirmadas.

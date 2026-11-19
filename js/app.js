@@ -149,3 +149,5 @@ $(document).ready(function () {
 // modularidad y limpieza
 
 // sin errores consola
+
+// uso seguro .text()

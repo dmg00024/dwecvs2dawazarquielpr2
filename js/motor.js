@@ -54,3 +54,5 @@ function euros(centimos) {
 // total = subtotal - descuento + recargo
 
 // toFixed(2)
+
+// replace('.', ',')

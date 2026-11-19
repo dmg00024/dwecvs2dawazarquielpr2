@@ -129,3 +129,5 @@ $(document).ready(function () {
 // restaurar tema
 
 // sessionStorage turno
+
+// window.confirm reinicio

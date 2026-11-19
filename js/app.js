@@ -141,3 +141,5 @@ $(document).ready(function () {
 // submit llama cotizar
 
 // botones conectados
+
+// input change

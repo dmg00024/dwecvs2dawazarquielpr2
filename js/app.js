@@ -78,7 +78,18 @@ function detenerReloj() {
   }
 }
 // TODO A6: reiniciar las cuatro cifras de la cotización y desactivar Confirmar.
-function vaciarResumenCotizacion() {}
+
+// A6
+function vaciarResumenCotizacion() {
+  detenerReloj();
+  $("#subtotal").text("—");
+  $("#descuento").text("—");
+  $("#recargo").text("—");
+  $("#total").text("—");
+  $("#temporizador").text("-- s");
+  $("#razonDescuento").text("La política de descuento aparecerá al cotizar.");
+  cambiarEstado("SIN_COTIZACION");
+}
 
 // TODO A7: actualizar estado y habilitar Confirmar SOLO en estado COTIZADA.
 function cambiarEstado(nuevo) { estado = nuevo; }

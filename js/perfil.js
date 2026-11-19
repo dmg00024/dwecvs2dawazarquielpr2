@@ -1,5 +1,6 @@
 "use strict";
 // A-01: Identificador propio sustituido en PERFIL.identificador
+// A-02: Identificador coincide exactamente con el sufijo de ambas ramas (marcosAstudillop2)
 const PERFIL = {
   identificador: "marcosAstudillop2",
   tema: "tecnologia",

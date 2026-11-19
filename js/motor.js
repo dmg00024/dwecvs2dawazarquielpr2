@@ -58,3 +58,5 @@ function euros(centimos) {
 // replace('.', ',')
 
 // simbolo euro
+
+// centimos hasta UI

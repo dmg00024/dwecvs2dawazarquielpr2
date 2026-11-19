@@ -234,9 +234,64 @@ function alternarTema() {
   }
 }
 
+function reiniciarHistorico() {
+  if (!window.confirm("¿Seguro que quieres borrar el histórico confirmado?")) {
+    return;
+  }
+  operaciones = 0;
+  acumulado = 0;
+  ultimaReferencia = "—";
+  guardarHistorico();
+  actualizarResumen();
+  $("#referencia").text("Todavía no hay operación confirmada.");
+  $("#mensaje").text("Histórico reiniciado.");
+}
+
 $(document).ready(function () {
   mostrarPerfil();
+  recuperarHistorico();
+
+  try {
+    const temaGuardado = localStorage.getItem(`${PREFIJO_STORAGE}tema`);
+    if (temaGuardado === "claro" || temaGuardado === "oscuro") {
+      $("html").attr("data-theme", temaGuardado);
+    }
+  } catch (error) {
+    // Sin localStorage se mantiene el tema por defecto.
+  }
+
+  cambiarEstado("SIN_COTIZACION");
+  actualizarResumen();
+
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.
+  $("#formPresupuesto").on("submit", function (evento) {
+    evento.preventDefault();
+    cotizar();
+  });
+  $("#confirmar").on("click", confirmar);
+  $("#cancelar").on("click", cancelar);
+  $("#cambiarTema").on("click", alternarTema);
+  $("#reiniciar").on("click", reiniciarHistorico);
+
+  $("#servicio, #cantidad, #turno").on("input change", function () {
+    invalidarCotizacion("Has cambiado los datos: vuelve a pulsar «Cotizar».");
+  });
+
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
-  // Importante: .on('submit') requiere preventDefault() para no recargar la página.
+  try {
+    const turnoGuardado = sessionStorage.getItem(`${PREFIJO_STORAGE}turno`);
+    if (turnoGuardado === "manana" || turnoGuardado === "tarde") {
+      $("#turno").val(turnoGuardado);
+    }
+  } catch (error) {
+    
+  }
+
+  $("#turno").on("change", function () {
+    try {
+      sessionStorage.setItem(`${PREFIJO_STORAGE}turno`, $("#turno").val());
+    } catch (error) {
+      
+    }
+  });
 });

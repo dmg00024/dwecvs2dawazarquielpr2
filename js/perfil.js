@@ -3,7 +3,7 @@
 // Cada alumno debe completar su identificador único y elegir un tema de interés.
 const PERFIL = {
   identificador: "luciaGodoyp2",   // Ej.: anaGarciap2; exactamente como el sufijo de tus ramas
-  tema: "Música",               // tecnologia | deporte | musica | cine
+  tema: "musica",               // tecnologia | deporte | musica | cine
   descripcion: "Elije, compra, escucha, disfruta."
 };
 

@@ -125,3 +125,5 @@ $(document).ready(function () {
 // saneamiento de datos
 
 // guardar tema
+
+// restaurar tema

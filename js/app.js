@@ -131,3 +131,5 @@ $(document).ready(function () {
 // sessionStorage turno
 
 // window.confirm reinicio
+
+// borrado y persistencia cero

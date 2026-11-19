@@ -28,8 +28,14 @@ function validarSolicitud(servicio, cantidadTexto, turno, limite, tema) {
   if (servicio == "") {
     return "Error: Debe seleccionar un servicio.";
   }
+  if (precioCentimos(servicio) === 0) {
+    return "Error: El servicio seleccionado no existe.";
+  }
   if (turno == "") {
     return "Error: Debe seleccionar un turno.";
+  }
+  if (turno !== "manana" && turno !== "tarde") {
+    return "Error: El turno seleccionado no existe.";
   }
   if (cantidadTexto == "") {
     return "Error: Debe ingresar el número de plazas.";
@@ -45,7 +51,7 @@ function validarSolicitud(servicio, cantidadTexto, turno, limite, tema) {
   }
 
   if (tema == "deporte" && servicio == "basico" && turno == "tarde") {
-    return `Error: tu temática ${tema} no está disponible para el servicio ${servicio} en el turno de ${turno}.`;
+    return "Error: En deporte no se puede contratar el servicio básico por la tarde.";
   }
 
   return "";
@@ -66,7 +72,6 @@ function calcularDescuento(subtotal, cantidad, servicio, turno, variante) {
     }
     return 0;
   }
-
   return 0;
 }
 

@@ -127,3 +127,5 @@ $(document).ready(function () {
 // guardar tema
 
 // restaurar tema
+
+// sessionStorage turno

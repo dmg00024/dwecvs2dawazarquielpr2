@@ -242,7 +242,33 @@ $(document).ready(function () {
   if (temaGuardado === "claro" || temaGuardado === "oscuro") {
     document.documentElement.setAttribute("data-theme", temaGuardado);
   }
+  recuperarHistorico();
+
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.
+  const $formulario = $("#formPresupuesto");
+  $formulario.on("submit", function (evento) {
+    evento.preventDefault();
+    cotizar();
+  });
+  $("#confirmar").on("click", confirmar);
+  $("#cancelar").on("click", cancelar);
+  $("#cambiarTema").on("click", alternarTema);
+  $formulario.on("input change", "input, select", function () {
+    invalidarCotizacion("Los datos han cambiado. Vuelve a cotizar.");
+  });
+  $("#reiniciar").on("click", function () {
+    if (!window.confirm("¿Quieres reiniciar el histórico de operaciones?")) {
+      return;
+    }
+
+    operaciones = 0;
+    acumulado = 0;
+    ultimaReferencia = "—";
+    guardarHistorico();
+    actualizarResumen();
+    $("#mensaje").text("El histórico se ha reiniciado.");
+  });
+
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.
 });

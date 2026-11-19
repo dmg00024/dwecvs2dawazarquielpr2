@@ -87,3 +87,5 @@ $(document).ready(function () {
 // Confirmar disabled al caducar
 
 // Verificacion Date.now() en confirmacion
+
+// detenerReloj() previo

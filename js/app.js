@@ -89,3 +89,5 @@ $(document).ready(function () {
 // Verificacion Date.now() en confirmacion
 
 // detenerReloj() previo
+
+// clearInterval y null

@@ -44,3 +44,5 @@ function euros(centimos) {
 // centimos enteros
 
 // uso de calcularDescuento
+
+// Math.round en descuento

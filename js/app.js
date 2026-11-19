@@ -67,3 +67,5 @@ $(document).ready(function () {
 });
 
 // let estado = 'SIN_COTIZACION'
+
+// cambiarEstado('COTIZADA')

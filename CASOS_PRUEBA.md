@@ -41,3 +41,5 @@ Crea y explica al menos CINCO casos concretos con tus valores de `SEMILLA`, `VAR
 <!-- Historial paso a paso -->
 
 <!-- Origen feature -->
+
+<!-- Destino release -->

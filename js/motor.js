@@ -21,3 +21,5 @@ function calcularDescuento(subtotal, cantidad, servicio, turno, variante) { retu
 function calcularRecargo(subtotal, porcentaje) { return 0; }
 function construirReferencia(identificador, contador) { return "PENDIENTE"; }
 function euros(centimos) { return "—"; }
+
+// B-02: Implementado en validacion y flujo de cotizacion

@@ -77,3 +77,5 @@ $(document).ready(function () {
 // Desglose partidas
 
 // Fallo validacion detiene
+
+// SEGUNDOS_VALIDEZ 60s

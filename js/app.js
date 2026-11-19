@@ -103,3 +103,5 @@ $(document).ready(function () {
 // Cancelar detiene reloj
 
 // totalPendiente = 0
+
+// Bloqueo doble confirmacion

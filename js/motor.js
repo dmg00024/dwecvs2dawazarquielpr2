@@ -23,3 +23,5 @@ function construirReferencia(identificador, contador) { return "PENDIENTE"; }
 function euros(centimos) { return "—"; }
 
 // B-02: Implementado en validacion y flujo de cotizacion
+
+// B-03: Implementado en validacion y flujo de cotizacion

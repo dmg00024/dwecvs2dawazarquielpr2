@@ -147,3 +147,5 @@ $(document).ready(function () {
 // separacion tres capas
 
 // modularidad y limpieza
+
+// sin errores consola

@@ -82,10 +82,29 @@ function cambiarEstado(nuevo) {
 }
 
 // TODO A8: invalidar una cotización activa si cambian campos del formulario.
-function invalidarCotizacion(motivo) {}
+function invalidarCotizacion(motivo) {
+  if(estado !== "COTIZACION"){
+    return;
+  }
+
+  detenerReloj();
+  vaciarResumenCotizacion();
+  cambiarEstado("INVALIDADA");
+  mostrarMensaje(motivo);
+}
 
 // TODO A9: mostrar segundos restantes, controlar caducidad e impedir confirmar.
-function actualizarCuentaAtras() {}
+function actualizarCuentaAtras() {
+  const restante = Math.ceil((finCotizacion - Date.now()) / 1000);
+    if (restante > 0) {
+      detenerReloj();
+      vaciarResumenCotizacion();
+      cambiarEstado("CADUCADA");
+      mostrarMensaje("El presupuesto ha caducado. Por favor, vuelva a pulsar <<Cotizar>>.");
+      return;
+    }
+    $("#temporizador").text(`${restante} s`);
+}
 
 // TODO A10: validar, calcular subtotal/descuento/recargo/total en céntimos,
 // mostrar desglose, iniciar cuenta atrás y pasar a COTIZADA.

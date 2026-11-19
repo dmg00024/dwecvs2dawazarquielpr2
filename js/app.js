@@ -205,7 +205,12 @@ function cancelar() {
 }
 
 // TODO A13: tema oscuro/claro con persistencia localStorage.
-function alternarTema() {}
+function alternarTema() {
+  const actual = document.documentElement.getAttribute("data-theme") === "claro" ? "claro" : "oscuro";
+  const nuevo = actual === "claro" ? "oscuro" : "claro";
+  document.documentElement.setAttribute("data-theme", nuevo);
+  localStorage.setItem(K_TEMA, nuevo);
+}
 
 $(document).ready(function () {
   mostrarPerfil();

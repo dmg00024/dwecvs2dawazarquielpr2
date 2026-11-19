@@ -117,6 +117,9 @@ function construirReferencia(identificador, contador) {
 }
 
 // TODO M6: formatear 12345 céntimos como "123,45 €".
+
+// M6
 function euros(centimos) {
-  return "—";
+  const valor = (centimos / 100).toFixed(2).replace(".", ",");
+  return `${valor} €`;
 }

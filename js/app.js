@@ -77,8 +77,9 @@ function vaciarResumenCotizacion() {
 // TODO A7: actualizar estado y habilitar Confirmar SOLO en estado COTIZADA.
 function cambiarEstado(nuevo) {
   estado = nuevo;
-  $("#estado").text(estado);
-  $("#estado").toggleClass("activo", estado === "COTIZADA");
+  const $estado = $("#estado");
+  $estado.text(estado);
+  $estado.toggleClass("activo", estado === "COTIZADA");
   $("#confirmar").prop("disabled", estado !== "COTIZADA");
 }
 
@@ -101,7 +102,8 @@ function invalidarCotizacion(motivo) {
 // TODO A9: mostrar segundos restantes, controlar caducidad e impedir confirmar.
 function actualizarCuentaAtras() {
   const restante = Math.max(0, Math.ceil((finCotizacion - Date.now()) / 1000));
-  $("#temporizador").text(`${restante} s`);
+  const $temporizador = $("#temporizador");
+  $temporizador.text(`${restante} s`);
 
   if (estado !== "COTIZADA" || Date.now() < finCotizacion) {
     return;
@@ -109,7 +111,7 @@ function actualizarCuentaAtras() {
 
   detenerReloj();
   totalPendiente = 0;
-  $("#temporizador").text("0 s");
+  $temporizador.text("0 s");
   cambiarEstado("CADUCADA");
   vaciarResumenCotizacion();
   $("#razonDescuento").text("La cotización ha caducado.");
@@ -122,6 +124,9 @@ function actualizarCuentaAtras() {
 function cotizar() {
   detenerReloj();
   totalPendiente = 0;
+  const $razonDescuento = $("#razonDescuento");
+  const $referencia = $("#referencia");
+  const $mensaje = $("#mensaje");
 
   const servicio = $("#servicio").val();
   const cantidadTexto = $("#cantidad").val();
@@ -141,9 +146,9 @@ function cotizar() {
 
   if (error !== "") {
     cambiarEstado("SIN COTIZACION");
-    $("#razonDescuento").text("Corrige los datos para calcular la cotización.");
-    $("#referencia").text("Todavía no hay operación confirmada.");
-    $("#mensaje").text(error);
+    $razonDescuento.text("Corrige los datos para calcular la cotización.");
+    $referencia.text("Todavía no hay operación confirmada.");
+    $mensaje.text(error);
     return;
   }
 
@@ -162,13 +167,13 @@ function cotizar() {
   $("#descuento").text(euros(descuento));
   $("#recargo").text(euros(recargo));
   $("#total").text(euros(total));
-  $("#razonDescuento").text(
+  $razonDescuento.text(
     descuento > 0
       ? `Descuento personalizado aplicado: ${euros(descuento)}.`
       : "No se aplica descuento personalizado."
   );
-  $("#referencia").text("Presupuesto pendiente de confirmación.");
-  $("#mensaje").text("Cotización calculada correctamente.");
+  $referencia.text("Presupuesto pendiente de confirmación.");
+  $mensaje.text("Cotización calculada correctamente.");
 
   totalPendiente = total;
   finCotizacion = Date.now() + SEGUNDOS_VALIDEZ * 1000;
@@ -179,7 +184,29 @@ function cotizar() {
 
 // TODO A11: solo confirmar una cotización vigente. Actualizar histórico,
 // referencia secuencial y persistencia SIN contabilizar duplicados.
-function confirmar() {}
+function confirmar() {
+  if (estado !== "COTIZADA") {
+    return;
+  }
+
+  if (Date.now() >= finCotizacion) {
+    actualizarCuentaAtras();
+    return;
+  }
+
+  detenerReloj();
+  operaciones += 1;
+  acumulado += totalPendiente;
+  ultimaReferencia = construirReferencia(PERFIL.identificador, operaciones);
+
+  cambiarEstado("CONFIRMADA");
+  $("#temporizador").text("Confirmada");
+  $("#referencia").text(`Operación confirmada: ${ultimaReferencia}`);
+  $("#mensaje").text("Presupuesto confirmado correctamente.");
+
+  guardarHistorico();
+  actualizarResumen();
+}
 
 // TODO A12: cancelar cotización sin alterar histórico confirmado.
 function cancelar() {}

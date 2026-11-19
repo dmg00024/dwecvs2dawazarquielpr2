@@ -160,7 +160,29 @@ function cotizar() {
 
 // TODO A11: solo confirmar una cotización vigente. Actualizar histórico,
 // referencia secuencial y persistencia SIN contabilizar duplicados.
-function confirmar() {}
+function confirmar() {
+  if (estado !== "COTIZADA") {
+    return;
+  }
+  if (Date.now() >= finCotizacion) {
+    actualizarCuentaAtras();
+    return;
+  }
+
+  cambiarEstado("CONFIRMADA");
+  detenerReloj();
+
+  operaciones = operaciones + 1;
+  acumulado = acumulado + totalPendiente;
+  ultimaReferencia = construirReferencia(PERFIL.identificador, operaciones);
+  guardarHistorico();
+  actualizarResumen();
+
+  $("#temporizador").text("-- s");
+  $("#referencia").text(`Operación confirmada: ${ultimaReferencia} · ${euros(totalPendiente)}`);
+  mostrarMensaje(`Presupuesto confirmado con la referencia ${ultimaReferencia}.`, "exito");
+  totalPendiente = 0;
+}
 
 // TODO A12: cancelar cotización sin alterar histórico confirmado.
 function cancelar() {}

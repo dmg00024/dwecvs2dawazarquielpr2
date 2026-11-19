@@ -93,3 +93,5 @@ $(document).ready(function () {
 // clearInterval y null
 
 // invalidar por cantidad
+
+// invalidar por servicio

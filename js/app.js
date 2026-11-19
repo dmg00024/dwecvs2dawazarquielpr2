@@ -73,3 +73,5 @@ $(document).ready(function () {
 // Confirmar disabled por defecto
 
 // Habilitar solo en COTIZADA
+
+// Desglose partidas

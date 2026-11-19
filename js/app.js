@@ -69,8 +69,14 @@ function guardarHistorico() {
 }
 
 // TODO A5: detener el intervalo previo y reiniciar el instante de caducidad.
-function detenerReloj() {}
 
+//A5
+function detenerReloj() {
+  if (idIntervalo) {
+    clearInterval(idIntervalo);
+    idIntervalo = null;
+  }
+}
 // TODO A6: reiniciar las cuatro cifras de la cotización y desactivar Confirmar.
 function vaciarResumenCotizacion() {}
 

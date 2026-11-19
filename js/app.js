@@ -105,3 +105,5 @@ $(document).ready(function () {
 // totalPendiente = 0
 
 // Bloqueo doble confirmacion
+
+// operaciones += 1

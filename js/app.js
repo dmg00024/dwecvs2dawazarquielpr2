@@ -234,7 +234,7 @@ $(document).ready(function () {
     cancelar();
   });
 
-  $("#alternarTema, #btnTema").on("click", function (e) {
+  $("#cambiarTema").on("click", function (e) {
     e.preventDefault();
     alternarTema();
   });

@@ -12,12 +12,6 @@ let ultimaReferencia = "—";
 // TODO A1: mostrar los datos derivados del perfil en la cabecera.
 function mostrarPerfil() {
   $("#nombrePerfil").text(`${PERFIL.identificador} · ${PERFIL.tema}`);
-  $("#descripcionPerfil").text(PERFIL.descripcion);
-  $("#etiquetaCodigo").text(`ID: ${PERFIL.identificador}`);
-  $("#etiquetaVariante").text(`Política ${["A", "B", "C", "D"][VARIANTE]} (Var. ${VARIANTE})`);
-  $("#etiquetaLimite").text(`Máx. ${MAX_UNIDADES} plazas`);
-  $("#etiquetaRecargo").text(`Recargo: ${RECARGO_PORCENTAJE} %`);
-  $("#etiquetaTiempo").text(`Validez: ${SEGUNDOS_VALIDEZ} s`);
 }
 
 // TODO A2: actualizar los tres indicadores de operaciones confirmadas.
@@ -65,91 +59,3 @@ $(document).ready(function () {
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.
 });
-
-// let estado = 'SIN_COTIZACION'
-
-// cambiarEstado('COTIZADA')
-
-// Confirmar disabled por defecto
-
-// Habilitar solo en COTIZADA
-
-// Desglose partidas
-
-// Fallo validacion detiene
-
-// SEGUNDOS_VALIDEZ 60s
-
-// Date.now() real
-
-// Estado CADUCADA
-
-// Confirmar disabled al caducar
-
-// Verificacion Date.now() en confirmacion
-
-// detenerReloj() previo
-
-// clearInterval y null
-
-// invalidar por cantidad
-
-// invalidar por servicio
-
-// invalidar por turno
-
-// Cancelar pasa a SIN_COTIZACION
-
-// Cancelar detiene reloj
-
-// totalPendiente = 0
-
-// Bloqueo doble confirmacion
-
-// operaciones += 1
-
-// acumulado += totalPendiente
-
-// DWEC-MARCOSASTUDILLOP2-XXXX
-
-// padStart(4, '0')
-
-// No duplicacion
-
-// ultimaReferencia en DOM
-
-// localStorage guardar
-
-// localStorage recuperar
-
-// saneamiento de datos
-
-// guardar tema
-
-// restaurar tema
-
-// sessionStorage turno
-
-// window.confirm reinicio
-
-// borrado y persistencia cero
-
-// document.ready
-
-// preventDefault
-
-// submit llama cotizar
-
-// botones conectados
-
-// input change
-
-// separacion tres capas
-
-// modularidad y limpieza
-
-// sin errores consola
-
-// uso seguro .text()
-
-// data-theme claro/oscuro

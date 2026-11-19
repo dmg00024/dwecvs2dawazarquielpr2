@@ -85,3 +85,5 @@ $(document).ready(function () {
 // Estado CADUCADA
 
 // Confirmar disabled al caducar
+
+// Verificacion Date.now() en confirmacion

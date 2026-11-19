@@ -75,3 +75,5 @@ $(document).ready(function () {
 // Habilitar solo en COTIZADA
 
 // Desglose partidas
+
+// Fallo validacion detiene

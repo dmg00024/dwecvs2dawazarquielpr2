@@ -27,29 +27,3 @@
 
 ## Pruebas individuales obligatorias
 Crea y explica al menos CINCO casos concretos con tus valores de `SEMILLA`, `VARIANTE`, `RECARGO_PORCENTAJE` y `MAX_UNIDADES`. Incluye como mínimo un caso frontera de tu propia política, uno inválido, un cambio que invalida la cotización, una confirmación y una caducidad. Registra datos de entrada y salida esperada/real en la descripción de la PR.
-
-<!-- Repositorio accesible -->
-
-<!-- Base develop 97c2f02 -->
-
-<!-- feature/marcosAstudillop2 -->
-
-<!-- release/marcosAstudillop2 -->
-
-<!-- release inalterada -->
-
-<!-- Historial paso a paso -->
-
-<!-- Origen feature -->
-
-<!-- Destino release -->
-
-<!-- PR abierta -->
-
-<!-- Documentacion Prueba 1 -->
-
-<!-- Documentacion Prueba 2 -->
-
-<!-- Documentacion Prueba 3 -->
-
-<!-- Documentacion Prueba 4 -->

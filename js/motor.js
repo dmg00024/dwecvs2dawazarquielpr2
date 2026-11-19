@@ -60,3 +60,5 @@ function euros(centimos) {
 // simbolo euro
 
 // centimos hasta UI
+
+// Politica C: premium 12%

@@ -46,3 +46,5 @@ function euros(centimos) {
 // uso de calcularDescuento
 
 // Math.round en descuento
+
+// recargo sobre subtotal

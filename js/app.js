@@ -17,6 +17,10 @@ const TEXTO_ESTADO = {
   CADUCADA: "CADUCADA"
 };
 
+function mostrarMensaje(texto, tipo) {
+  $("#mensaje").removeClass("error exito").addClass(tipo).text(texto);
+}
+
 // TODO A1: mostrar los datos derivados del perfil en la cabecera.
 function mostrarPerfil() {
   const letra = "ABCD"[VARIANTE];
@@ -82,7 +86,15 @@ function cambiarEstado(nuevo) {
 }
 
 // TODO A8: invalidar una cotización activa si cambian campos del formulario.
-function invalidarCotizacion(motivo) {}
+function invalidarCotizacion(motivo) {
+  if (estado !== "COTIZADA") {
+    return;
+  }
+  detenerReloj();
+  vaciarResumenCotizacion();
+  cambiarEstado("INVALIDADA");
+  mostrarMensaje(motivo, "error");
+}
 
 // TODO A9: mostrar segundos restantes, controlar caducidad e impedir confirmar.
 function actualizarCuentaAtras() {}

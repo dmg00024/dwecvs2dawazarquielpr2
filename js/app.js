@@ -209,6 +209,12 @@ function alternarTema() {
 }
 
 $(document).ready(function () {
+
+  // A13: aplicar el tema de colores guardado si lo hay (en vez de setItem usamos getItem)
+  const temaGuardado = localStorage.getItem(`${PREFIJO_STORAGE}temaColores`);
+  if (temaGuardado === "claro" || temaGuardado === "oscuro") {
+    $("html").attr("data-theme", temaGuardado);
+  }
   mostrarPerfil();
   recuperarHistorico();
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.

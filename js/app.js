@@ -203,6 +203,36 @@ $(document).ready(function () {
 $(document).ready(function () {
   mostrarPerfil();
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.
+  const temaGuardado = localStorage.getItem(`${PREFIJO_STORAGE}tema`);
+  if (temaGuardado === "oscuro" || temaGuardado === "claro") {
+    $("html").attr("data-theme", temaGuardado);
+  }
+
+  $("#formPresupuesto").on("submit", function (evento) {
+    evento.preventDefault();
+    cotizar();
+  });
+
+  $("#confirmar").on("click", confirmar);
+  $("#cancelar").on("click", cancelar);
+  $("#cambiarTema").on("click", alternarTema);
+
+  $("#servicio, #cantidad").on("input change", function () {
+    invalidarCotizacion("Los datos han cambiado. Cotiza de nuevo.");
+  });
+
+  $("#reiniciar").on("click", function () {
+    if (!window.confirm("¿Seguro que quieres reiniciar el histórico confirmado?")) {
+      return;
+    }
+
+    operaciones = 0;
+    acumulado = 0;
+    ultimaReferencia = "—";
+    guardarHistorico();
+    actualizarResumen();
+    $("#referencia").text("Todavía no hay operación confirmada.");
+  });
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.
 });

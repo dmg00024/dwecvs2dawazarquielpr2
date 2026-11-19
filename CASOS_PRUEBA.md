@@ -29,3 +29,5 @@
 Crea y explica al menos CINCO casos concretos con tus valores de `SEMILLA`, `VARIANTE`, `RECARGO_PORCENTAJE` y `MAX_UNIDADES`. Incluye como mínimo un caso frontera de tu propia política, uno inválido, un cambio que invalida la cotización, una confirmación y una caducidad. Registra datos de entrada y salida esperada/real en la descripción de la PR.
 
 <!-- Repositorio accesible -->
+
+<!-- Base develop 97c2f02 -->

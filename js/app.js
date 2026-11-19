@@ -221,7 +221,18 @@ function cancelar() {
 }
 
 // TODO A13: tema oscuro/claro con persistencia localStorage.
-function alternarTema() {}
+function alternarTema() {
+  const actual = $("html").attr("data-theme") === "claro" ? "claro" : "oscuro";
+  const nuevo = actual === "claro" ? "oscuro" : "claro";
+
+  $("html").attr("data-theme", nuevo);
+
+  try {
+    localStorage.setItem(`${PREFIJO_STORAGE}tema`, nuevo);
+  } catch (error) {
+    // Si localStorage está bloqueado, cambia solo en la sesión actual.
+  }
+}
 
 $(document).ready(function () {
   mostrarPerfil();

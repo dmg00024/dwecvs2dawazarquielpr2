@@ -151,3 +151,5 @@ $(document).ready(function () {
 // sin errores consola
 
 // uso seguro .text()
+
+// data-theme claro/oscuro

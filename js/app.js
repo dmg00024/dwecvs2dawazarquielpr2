@@ -71,3 +71,5 @@ $(document).ready(function () {
 // cambiarEstado('COTIZADA')
 
 // Confirmar disabled por defecto
+
+// Habilitar solo en COTIZADA

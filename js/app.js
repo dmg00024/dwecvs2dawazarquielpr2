@@ -111,3 +111,5 @@ $(document).ready(function () {
 // acumulado += totalPendiente
 
 // DWEC-MARCOSASTUDILLOP2-XXXX
+
+// padStart(4, '0')

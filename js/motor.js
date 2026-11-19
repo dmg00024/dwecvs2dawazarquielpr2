@@ -40,3 +40,5 @@ function euros(centimos) {
 // case 'premium': return 3275;
 
 // subtotal = precio * cantidad
+
+// centimos enteros

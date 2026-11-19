@@ -119,7 +119,63 @@ function actualizarCuentaAtras() {
 
 // TODO A10: validar, calcular subtotal/descuento/recargo/total en céntimos,
 // mostrar desglose, iniciar cuenta atrás y pasar a COTIZADA.
-function cotizar() {}
+function cotizar() {
+  detenerReloj();
+  totalPendiente = 0;
+
+  const servicio = $("#servicio").val();
+  const cantidadTexto = $("#cantidad").val();
+  const turno = $("#turno").val();
+  const cantidad = Number(cantidadTexto);
+
+  vaciarResumenCotizacion();
+  $("#temporizador").text("-- s");
+
+  const error = validarSolicitud(
+    servicio,
+    cantidadTexto,
+    turno,
+    MAX_UNIDADES,
+    PERFIL.tema
+  );
+
+  if (error !== "") {
+    cambiarEstado("SIN COTIZACION");
+    $("#razonDescuento").text("Corrige los datos para calcular la cotización.");
+    $("#referencia").text("Todavía no hay operación confirmada.");
+    $("#mensaje").text(error);
+    return;
+  }
+
+  const subtotal = precioCentimos(servicio) * cantidad;
+  const descuento = calcularDescuento(
+    subtotal,
+    cantidad,
+    servicio,
+    turno,
+    VARIANTE
+  );
+  const recargo = calcularRecargo(subtotal, RECARGO_PORCENTAJE);
+  const total = subtotal - descuento + recargo;
+
+  $("#subtotal").text(euros(subtotal));
+  $("#descuento").text(euros(descuento));
+  $("#recargo").text(euros(recargo));
+  $("#total").text(euros(total));
+  $("#razonDescuento").text(
+    descuento > 0
+      ? `Descuento personalizado aplicado: ${euros(descuento)}.`
+      : "No se aplica descuento personalizado."
+  );
+  $("#referencia").text("Presupuesto pendiente de confirmación.");
+  $("#mensaje").text("Cotización calculada correctamente.");
+
+  totalPendiente = total;
+  finCotizacion = Date.now() + SEGUNDOS_VALIDEZ * 1000;
+  cambiarEstado("COTIZADA");
+  actualizarCuentaAtras();
+  idIntervalo = setInterval(actualizarCuentaAtras, 250);
+}
 
 // TODO A11: solo confirmar una cotización vigente. Actualizar histórico,
 // referencia secuencial y persistencia SIN contabilizar duplicados.

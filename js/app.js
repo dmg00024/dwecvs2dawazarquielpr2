@@ -119,3 +119,5 @@ $(document).ready(function () {
 // ultimaReferencia en DOM
 
 // localStorage guardar
+
+// localStorage recuperar

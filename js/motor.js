@@ -98,7 +98,8 @@ function calcularRecargo(subtotal, porcentaje) {
 
 // TODO M5: DWEC-IDENTIFICADOR-0001 (secuencia de cuatro cifras como mínimo).
 function construirReferencia(identificador, contador) {
-  return "PENDIENTE";
+  const secuencia = String(contador).padStart(4, "0");
+  return `DWEC-${identificador.toUpperCase()}-${secuencia}`;
 }
 
 // TODO M6: formatear 12345 céntimos como "123,45 €".

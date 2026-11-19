@@ -21,6 +21,15 @@ function mostrarMensaje(texto, tipo) {
   $("#mensaje").removeClass("error exito").addClass(tipo).text(texto);
 }
 
+function textoPolitica() {
+  switch (VARIANTE) {
+    case 0: return "Política A: 1–3 unidades 0 %, 4–6 unidades 8 %, 7 o más 13 %.";
+    case 1: return "Política B: 9 % por la tarde y 4 % más desde 5 unidades.";
+    case 2: return "Política C: prémium 12 %; resto 6 % desde 6 unidades.";
+    default: return "Política D: 1,75 € por pareja de unidades, máximo 20 % del subtotal.";
+  }
+}
+
 // TODO A1: mostrar los datos derivados del perfil en la cabecera.
 function mostrarPerfil() {
   const letra = "ABCD"[VARIANTE];
@@ -114,7 +123,40 @@ function actualizarCuentaAtras() {
 
 // TODO A10: validar, calcular subtotal/descuento/recargo/total en céntimos,
 // mostrar desglose, iniciar cuenta atrás y pasar a COTIZADA.
-function cotizar() {}
+function cotizar() {
+  const servicio = $("#servicio").val();
+  const cantidadTexto = $("#cantidad").val();
+  const turno = $("#turno").val();
+
+  detenerReloj();
+  vaciarResumenCotizacion();
+
+  const error = validarSolicitud(servicio, cantidadTexto, turno, MAX_UNIDADES, PERFIL.tema);
+  if (error !== "") {
+    cambiarEstado("SIN_COTIZACION");
+    mostrarMensaje(error, "error");
+    return;
+  }
+
+  const cantidad = Number(cantidadTexto);
+  const subtotal = precioCentimos(servicio) * cantidad;
+  const descuento = calcularDescuento(subtotal, cantidad, servicio, turno, VARIANTE);
+  const recargo = calcularRecargo(subtotal, RECARGO_PORCENTAJE);
+  const total = subtotal - descuento + recargo;
+  totalPendiente = total;
+
+  $("#subtotal").text(euros(subtotal));
+  $("#descuento").text("−" + euros(descuento));
+  $("#recargo").text("+" + euros(recargo));
+  $("#total").text(euros(total));
+  $("#razonDescuento").text(textoPolitica());
+
+  finCotizacion = Date.now() + SEGUNDOS_VALIDEZ * 1000;
+  cambiarEstado("COTIZADA");
+  actualizarCuentaAtras();
+  idIntervalo = setInterval(actualizarCuentaAtras, 250);
+  mostrarMensaje(`Presupuesto calculado. Tienes ${SEGUNDOS_VALIDEZ} segundos para confirmarlo.`, "exito");
+}
 
 // TODO A11: solo confirmar una cotización vigente. Actualizar histórico,
 // referencia secuencial y persistencia SIN contabilizar duplicados.

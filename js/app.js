@@ -187,7 +187,18 @@ function cancelar() {
 }
 
 // TODO A13: tema oscuro/claro con persistencia localStorage.
-function alternarTema() {}
+function alternarTema() {
+  const $html = $("html");
+  const temaActual = $html.attr("data-theme");
+  const temaNuevo = temaActual === "claro" ? "oscuro" : "claro";
+
+  $html.attr("data-theme", temaNuevo);
+  localStorage.setItem(`${PREFIJO_STORAGE}tema`, temaNuevo);
+}
+
+$(document).ready(function () {
+  mostrarPerfil();
+  recuperarHistorico();
 
 $(document).ready(function () {
   mostrarPerfil();

@@ -256,4 +256,12 @@ $(document).ready(function () {
 
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.
+  const temaGuardado = localStorage.getItem(K_TEMA);
+  if (temaGuardado) document.documentElement.setAttribute("data-theme", temaGuardado);
+
+  const turnoGuardado = sessionStorage.getItem(K_TURNO);
+  if (turnoGuardado) $("#turno").val(turnoGuardado);
+  $("#turno").on("change", function () {
+    sessionStorage.setItem(K_TURNO, $(this).val());
+  });
 });

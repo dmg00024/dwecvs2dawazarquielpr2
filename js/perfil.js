@@ -19,6 +19,7 @@ function obtenerSemilla(identificador, tema) {
   return suma % 10007;
 }
 
+// A-06: SEMILLA y VARIANTE no se han manipulado
 const SEMILLA = obtenerSemilla(PERFIL.identificador, PERFIL.tema);
 const VARIANTE = SEMILLA % 4;
 const RECARGO_PORCENTAJE = 3 + (SEMILLA % 7);

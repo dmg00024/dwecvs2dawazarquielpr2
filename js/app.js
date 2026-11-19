@@ -146,13 +146,45 @@ function cotizar() {
 
 // TODO A11: solo confirmar una cotización vigente. Actualizar histórico,
 // referencia secuencial y persistencia SIN contabilizar duplicados.
-function confirmar() {}
+function confirmar() {
+  if (estado !== "COTIZADA" || Date.now() >= finCotizacion) {
+    return;
+  }
+
+  operaciones += 1;
+  acumulado += totalPendiente;
+  ultimaReferencia = construirReferencia(PERFIL.identificador, operaciones);
+
+  detenerReloj();
+  cambiarEstado("CONFIRMADA");  // Ya no se podra volver a confirmar
+  totalPendiente = 0;
+  $("#temporizador").text("--- s");
+
+  guardarHistorico();
+  actualizarResumen();
+  $("#referencia").text(`Operacion confirmada. Referencia. ${ultimaReferencia}`);
+  mostrarMensaje("Presupuesto confirmado corectamente.");
+}
 
 // TODO A12: cancelar cotización sin alterar histórico confirmado.
-function cancelar() {}
+function cancelar() {
+  if(estado !== "COTIZAR") {
+    mostarMensaje("No hay ningunacotizacion activa que cancelar.");
+    return;
+  }
+
+  detenerReloj();
+  vaciarResumenCotizacion();
+  cambiarEstado("CANCELADA");
+  mostarMensaje("Cotización cancelada.");
+}
 
 // TODO A13: tema oscuro/claro con persistencia localStorage.
-function alternarTema() {}
+function alternarTema() {
+  const nuevo = $("html").attr("data-tema") === "oscuro" ? "claro" : "oscuro";
+  $("html").attr("data-tema", nuevo);
+  localStorage.setItem(clave(modo), nuevo);
+}
 
 $(document).ready(function () {
   mostrarPerfil();

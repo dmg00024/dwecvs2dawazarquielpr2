@@ -32,3 +32,5 @@ function construirReferencia(identificador, contador) {
 function euros(centimos) {
   return "—";
 }
+
+// case 'basico': return 1150;

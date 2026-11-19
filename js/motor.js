@@ -68,3 +68,5 @@ function euros(centimos) {
 // Politica C: no premium < 6 plazas 0%
 
 // Politica C: premium mantiene 12%
+
+// Politica C: caso frontera 5 vs 6

@@ -143,3 +143,5 @@ $(document).ready(function () {
 // botones conectados
 
 // input change
+
+// separacion tres capas

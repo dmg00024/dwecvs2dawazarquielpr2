@@ -83,3 +83,5 @@ $(document).ready(function () {
 // Date.now() real
 
 // Estado CADUCADA
+
+// Confirmar disabled al caducar

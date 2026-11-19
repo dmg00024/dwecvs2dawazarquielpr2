@@ -121,3 +121,5 @@ $(document).ready(function () {
 // localStorage guardar
 
 // localStorage recuperar
+
+// saneamiento de datos

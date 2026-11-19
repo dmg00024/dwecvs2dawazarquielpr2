@@ -97,3 +97,5 @@ $(document).ready(function () {
 // invalidar por servicio
 
 // invalidar por turno
+
+// Cancelar pasa a SIN_COTIZACION

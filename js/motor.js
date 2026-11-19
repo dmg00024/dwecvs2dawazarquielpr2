@@ -1,6 +1,6 @@
 "use strict";
 
-// M1: según el servicio, devolver el precio en céntimos (1150, 1925, 3275).
+// TODO M1: según el servicio, devolver el precio en céntimos (1150, 1925, 3275).
 function precioCentimos(servicio) {
   switch (servicio) {
     case "basico":
@@ -23,7 +23,7 @@ function normalizarTexto(texto) {
       .toLowerCase();
 }
 
-// M2: devolver "" si todo es válido, o un MENSAJE claro si hay error.
+// TODO M2: devolver "" si todo es válido, o un MENSAJE claro si hay error.
 // Obligatorio comprobar servicio, turno, vacío, NaN, decimales, [1, limite]
 // Y la restricción de la temática personal. Además, el perfil no puede quedarse sin personalizar.
 function validarSolicitud(servicio, cantidadTexto, turno, limite, tema) {

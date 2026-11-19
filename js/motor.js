@@ -42,3 +42,5 @@ function euros(centimos) {
 // subtotal = precio * cantidad
 
 // centimos enteros
+
+// uso de calcularDescuento

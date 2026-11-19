@@ -135,3 +135,5 @@ $(document).ready(function () {
 // borrado y persistencia cero
 
 // document.ready
+
+// preventDefault

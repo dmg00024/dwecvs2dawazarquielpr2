@@ -178,7 +178,13 @@ function confirmar() {
 }
 
 // TODO A12: cancelar cotización sin alterar histórico confirmado.
-function cancelar() {}
+function cancelar() {
+  detenerReloj();
+  vaciarResumenCotizacion();
+  cambiarEstado("CANCELADA");
+  $("#razonDescuento").text("Cotización cancelada.");
+  $("#mensaje").removeClass("exito").addClass("error").text("Cotización cancelada.");
+}
 
 // TODO A13: tema oscuro/claro con persistencia localStorage.
 function alternarTema() {}

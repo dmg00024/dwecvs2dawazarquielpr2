@@ -94,7 +94,21 @@ function invalidarCotizacion(motivo) {
 }
 
 // TODO A9: mostrar segundos restantes, controlar caducidad e impedir confirmar.
-function actualizarCuentaAtras() {}
+function actualizarCuentaAtras() {
+  const restantes = Math.max(0, Math.ceil((finCotizacion - Date.now()) / 1000));
+  $("#temporizador").text(`${restantes} s`);
+
+  if (restantes === 0) {
+    if (idIntervalo !== null) {
+      clearInterval(idIntervalo);
+      idIntervalo = null;
+    }
+    vaciarResumenCotizacion();
+    cambiarEstado("CADUCADA");
+    $("#razonDescuento").text("La cotización ha caducado.");
+    $("#mensaje").removeClass("exito").addClass("error").text("La cotización ha caducado.");
+  }
+}
 
 // TODO A10: validar, calcular subtotal/descuento/recargo/total en céntimos,
 // mostrar desglose, iniciar cuenta atrás y pasar a COTIZADA.

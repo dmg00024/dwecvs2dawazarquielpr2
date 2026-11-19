@@ -193,14 +193,13 @@ function cancelar() {
   // Parar el reloj, borrar las cifras y cambiar el estado 
   detenerReloj();
   vaciarResumenCotizacion();
-  cambiarEstado("CANCELADA");
+  cambiarEstado("SIN_COTIZACION");
   $("#temporizador").text("-- s");
   $("#mensaje").text("Cotización cancelada. El histórico no se ha modificado.");
 }
 
 // TODO A13: tema oscuro/claro con persistencia localStorage.
 function alternarTema() {
-
 
 }
 

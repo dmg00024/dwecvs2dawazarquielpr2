@@ -4,7 +4,7 @@
 const PERFIL = {
   identificador: "luciaGodoyp2",   // Ej.: anaGarciap2; exactamente como el sufijo de tus ramas
   tema: "Música",               // tecnologia | deporte | musica | cine
-  descripcion: "Elije, compra, escucha."
+  descripcion: "Elije, compra, escucha, disfruta."
 };
 
 // Función suministrada. No hay que modificarla.

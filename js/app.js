@@ -101,3 +101,5 @@ $(document).ready(function () {
 // Cancelar pasa a SIN_COTIZACION
 
 // Cancelar detiene reloj
+
+// totalPendiente = 0

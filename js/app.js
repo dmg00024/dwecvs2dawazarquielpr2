@@ -200,8 +200,6 @@ $(document).ready(function () {
   mostrarPerfil();
   recuperarHistorico();
 
-$(document).ready(function () {
-  mostrarPerfil();
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.
   const temaGuardado = localStorage.getItem(`${PREFIJO_STORAGE}tema`);
   if (temaGuardado === "oscuro" || temaGuardado === "claro") {
@@ -233,6 +231,24 @@ $(document).ready(function () {
     actualizarResumen();
     $("#referencia").text("Todavía no hay operación confirmada.");
   });
+
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.
+  const turnoGuardado = sessionStorage.getItem(`${PREFIJO_STORAGE}turno`);
+  const turnoSelect = document.getElementById("turno");
+
+  if (turnoGuardado === "manana" || turnoGuardado === "tarde") {
+    turnoSelect.value = turnoGuardado;
+  }
+
+  turnoSelect.addEventListener("change", function () {
+    invalidarCotizacion("Los datos han cambiado. Cotiza de nuevo.");
+
+    const turno = this.value;
+    if (turno === "manana" || turno === "tarde") {
+      sessionStorage.setItem(`${PREFIJO_STORAGE}turno`, turno);
+    } else {
+      sessionStorage.removeItem(`${PREFIJO_STORAGE}turno`);
+    }
+  });
 });

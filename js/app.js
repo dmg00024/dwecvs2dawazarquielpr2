@@ -215,6 +215,45 @@ function alternarTema() {
 $(document).ready(function () {
   mostrarPerfil();
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.
+  recuperarHistorico();
+  vaciarResumenCotizacion();
+  cambiarEstado("SIN_COTIZACION");
+
+  $("form").on("submit", function (e) {
+    e.preventDefault();
+    cotizar();
+  });
+
+  $(".confirmar, #btnConfirmar").on("click", function (e) {
+    e.preventDefault();
+    confirmar();
+  });
+
+  $("#btnCancelar").on("click", function (e) {
+    e.preventDefault();
+    cancelar();
+  });
+
+  $("#alternarTema, #btnTema").on("click", function (e) {
+    e.preventDefault();
+    alternarTema();
+  });
+
+  $("#reiniciarHistorico").on("click", function (e) {
+    e.preventDefault();
+    if (confirm("¿Reiniciar histórico, acumulado y última referencia?")) {
+      operaciones = 0;
+      acumulado = 0;
+      ultimaReferencia = "—";
+      guardarHistorico();
+      actualizarResumen();
+    }
+  });
+
+  $("#servicio, #cantidad, #turno").on("input change", function () {
+    invalidarCotizacion("Los datos han cambiado. Vuelve a pulsar Cotizar.");
+  });
+
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.
 });

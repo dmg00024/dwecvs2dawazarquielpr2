@@ -69,3 +69,5 @@ $(document).ready(function () {
 // let estado = 'SIN_COTIZACION'
 
 // cambiarEstado('COTIZADA')
+
+// Confirmar disabled por defecto

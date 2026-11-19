@@ -9,6 +9,7 @@ const PERFIL = {
   descripcion: "Talleres y actividades prácticas de programación, robótica y desarrollo web."
 };
 
+// A-05: obtenerSemilla() suministrada no ha sido alterada
 function obtenerSemilla(identificador, tema) {
   const texto = `${identificador}|${tema}`;
   let suma = 0;

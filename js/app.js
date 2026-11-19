@@ -65,3 +65,5 @@ $(document).ready(function () {
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.
 });
+
+// let estado = 'SIN_COTIZACION'

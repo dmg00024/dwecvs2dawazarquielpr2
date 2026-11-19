@@ -117,3 +117,5 @@ $(document).ready(function () {
 // No duplicacion
 
 // ultimaReferencia en DOM
+
+// localStorage guardar

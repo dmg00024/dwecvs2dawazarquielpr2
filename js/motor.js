@@ -33,3 +33,5 @@ function euros(centimos) { return "—"; }
 // B-06: Implementado en validacion y flujo de cotizacion
 
 // B-07: Implementado en validacion y flujo de cotizacion
+
+// B-08: Implementado en validacion y flujo de cotizacion

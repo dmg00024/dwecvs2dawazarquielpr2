@@ -81,7 +81,17 @@ function cambiarEstado(nuevo) {
 }
 
 // TODO A8: invalidar una cotización activa si cambian campos del formulario.
-function invalidarCotizacion(motivo) {}
+function invalidarCotizacion(motivo) {
+  if (estado !== "COTIZADA") {
+    return;
+  }
+
+  detenerReloj();
+  vaciarResumenCotizacion();
+  cambiarEstado("MODIFICADA");
+  $("#razonDescuento").text("Cotización modificada.");
+  $("#mensaje").removeClass("exito").addClass("error").text(motivo);
+}
 
 // TODO A9: mostrar segundos restantes, controlar caducidad e impedir confirmar.
 function actualizarCuentaAtras() {}

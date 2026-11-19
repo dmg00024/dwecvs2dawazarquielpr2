@@ -21,7 +21,11 @@ function mostrarPerfil() {
 }
 
 // TODO A2: actualizar los tres indicadores de operaciones confirmadas.
-function actualizarResumen() {}
+function actualizarResumen() {
+  $("#operaciones").text(String(operaciones));
+  $("#acumulado").text(euros(acumulado));
+  $("#ultima").text(ultimaReferencia);
+}
 
 // TODO A3: leer los tres valores de localStorage de este perfil, sanearlos,
 // y llamar a actualizarResumen(). Si no existen, usar 0, 0, "—".

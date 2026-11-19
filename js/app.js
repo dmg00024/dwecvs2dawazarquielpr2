@@ -79,3 +79,5 @@ $(document).ready(function () {
 // Fallo validacion detiene
 
 // SEGUNDOS_VALIDEZ 60s
+
+// Date.now() real

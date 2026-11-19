@@ -139,3 +139,5 @@ $(document).ready(function () {
 // preventDefault
 
 // submit llama cotizar
+
+// botones conectados

@@ -109,3 +109,5 @@ $(document).ready(function () {
 // operaciones += 1
 
 // acumulado += totalPendiente
+
+// DWEC-MARCOSASTUDILLOP2-XXXX

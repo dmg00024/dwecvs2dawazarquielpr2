@@ -95,3 +95,5 @@ $(document).ready(function () {
 // invalidar por cantidad
 
 // invalidar por servicio
+
+// invalidar por turno

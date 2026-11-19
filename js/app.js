@@ -229,10 +229,19 @@ function cancelar() {
 }
 
 // TODO A13: tema oscuro/claro con persistencia localStorage.
-function alternarTema() {}
+function alternarTema() {
+  const temaActual = document.documentElement.getAttribute("data-theme");
+  const temaNuevo = temaActual === "claro" ? "oscuro" : "claro";
+  document.documentElement.setAttribute("data-theme", temaNuevo);
+  localStorage.setItem(`${PREFIJO_STORAGE}tema`, temaNuevo);
+}
 
 $(document).ready(function () {
   mostrarPerfil();
+  const temaGuardado = localStorage.getItem(`${PREFIJO_STORAGE}tema`);
+  if (temaGuardado === "claro" || temaGuardado === "oscuro") {
+    document.documentElement.setAttribute("data-theme", temaGuardado);
+  }
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.

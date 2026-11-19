@@ -2,10 +2,11 @@
 // A-01: Identificador propio sustituido en PERFIL.identificador
 // A-02: Identificador coincide exactamente con el sufijo de ambas ramas (marcosAstudillop2)
 // A-03: Tematica valida entre las cuatro permitidas (tecnologia)
+// A-04: Descripcion propia y relacionada con la tematica
 const PERFIL = {
   identificador: "marcosAstudillop2",
   tema: "tecnologia",
-  descripcion: "Describe en una frase tu servicio, relacionado con tu tema elegido."
+  descripcion: "Talleres y actividades prácticas de programación, robótica y desarrollo web."
 };
 
 function obtenerSemilla(identificador, tema) {

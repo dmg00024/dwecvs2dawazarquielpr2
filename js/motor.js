@@ -137,5 +137,13 @@ function construirReferencia(identificador, contador) {
 
 // TODO M6: formatear 12345 céntimos como "123,45 €".
 function euros(centimos) {
-  return "—";
+  if (!Number.isSafeInteger(centimos)) {
+    return "—";
+  }
+
+  const signo = centimos < 0 ? "-" : "";
+  const valorAbsoluto = Math.abs(centimos);
+  const unidades = Math.floor(valorAbsoluto / 100).toLocaleString("es-ES");
+  const resto = String(valorAbsoluto % 100).padStart(2, "0");
+  return `${signo}${unidades},${resto} €`;
 }

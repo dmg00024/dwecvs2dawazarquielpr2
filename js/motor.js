@@ -75,7 +75,19 @@ function validarSolicitud(servicio, cantidadTexto, turno, limite, tema) {
 // TODO M3: aplicar EXACTAMENTE la política que corresponda a variante (0-3).
 // Trabajar siempre en céntimos y aplicar Math.round cuando haya porcentaje.
 function calcularDescuento(subtotal, cantidad, servicio, turno, variante) {
-  return 0;
+  if (
+      !Number.isInteger(subtotal) ||
+      subtotal <= 0 ||
+      !Number.isInteger(cantidad) ||
+      cantidad < 1 ||
+      variante !== 3
+  ) {
+    return 0;
+  }
+
+  const descuentoPorParejas = Math.floor(cantidad / 2) * 175;
+  const descuentoMaximo = Math.floor(subtotal * 0.2);
+  return Math.min(descuentoPorParejas, descuentoMaximo);
 }
 
 // TODO M4: calcular el recargo porcentual sobre el SUBTOTAL, con redondeo.

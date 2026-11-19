@@ -123,3 +123,5 @@ $(document).ready(function () {
 // localStorage recuperar
 
 // saneamiento de datos
+
+// guardar tema

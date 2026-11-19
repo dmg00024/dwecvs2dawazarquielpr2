@@ -56,3 +56,5 @@ function euros(centimos) {
 // toFixed(2)
 
 // replace('.', ',')
+
+// simbolo euro

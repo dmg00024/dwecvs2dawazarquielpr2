@@ -91,3 +91,5 @@ $(document).ready(function () {
 // detenerReloj() previo
 
 // clearInterval y null
+
+// invalidar por cantidad

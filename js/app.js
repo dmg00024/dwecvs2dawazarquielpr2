@@ -141,7 +141,47 @@ function actualizarCuentaAtras() {
 
 // TODO A10: validar, calcular subtotal/descuento/recargo/total en céntimos,
 // mostrar desglose, iniciar cuenta atrás y pasar a COTIZADA.
-function cotizar() {}
+function cotizar() {
+  const servicio = $("#servicio").val();
+  const cantidadTexto = $("#cantidad").val();
+  const turno = $("#turno").val();
+
+  detenerReloj();
+  vaciarResumenCotizacion();
+
+  const error = validarSolicitud(servicio, cantidadTexto, turno, MAX_UNIDADES, PERFIL.tema);
+  if (error !== "") {
+    cambiarEstado("SIN_COTIZACION");
+    $("#mensaje").text(error);
+    return;
+  }
+
+  const cantidad = Number(cantidadTexto);
+  const subtotal = precioCentimos(servicio) * cantidad;
+  const descuento = calcularDescuento(subtotal, cantidad, servicio, turno, VARIANTE);
+  const recargo = calcularRecargo(subtotal, RECARGO_PORCENTAJE);
+  totalPendiente = subtotal - descuento + recargo;
+
+  let razon = "Política C: sin descuento para esta combinación.";
+  if (servicio === "premium") {
+    razon = "Política C: 12 % por contratar el servicio prémium.";
+  } else if (cantidad >= 6) {
+    razon = "Política C: 6 % por contratar 6 plazas o más.";
+  }
+
+  $("#subtotal").text(euros(subtotal));
+  $("#descuento").text(descuento > 0 ? `-${euros(descuento)}` : euros(0));
+  $("#recargo").text(`+${euros(recargo)}`);
+  $("#total").text(euros(totalPendiente));
+  $("#razonDescuento").text(razon);
+  $("#referencia").text("Cotización pendiente de confirmar.");
+  $("#mensaje").text(`Cotización calculada. Tienes ${SEGUNDOS_VALIDEZ} segundos para confirmar.`);
+
+  finCotizacion = Date.now() + SEGUNDOS_VALIDEZ * 1000;
+  cambiarEstado("COTIZADA");
+  $("#temporizador").text(`${SEGUNDOS_VALIDEZ} s`);
+  idIntervalo = setInterval(actualizarCuentaAtras, 250);
+}
 
 // TODO A11: solo confirmar una cotización vigente. Actualizar histórico,
 // referencia secuencial y persistencia SIN contabilizar duplicados.

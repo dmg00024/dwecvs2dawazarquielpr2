@@ -105,6 +105,7 @@ function actualizarCuentaAtras() {
   if (restante <= 0) {
     detenerReloj();
     cambiarEstado("CADUCADA");
+    totalPendiente = 0;
     $("#temporizador").text("0 s");
     $("#mensaje").text("La cotización ha caducado. Vuelve a cotizar.");
   } else {

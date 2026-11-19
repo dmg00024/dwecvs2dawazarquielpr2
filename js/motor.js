@@ -52,3 +52,5 @@ function euros(centimos) {
 // Math.round en recargo
 
 // total = subtotal - descuento + recargo
+
+// toFixed(2)

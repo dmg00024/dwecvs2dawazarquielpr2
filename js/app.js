@@ -192,6 +192,19 @@ function cancelar() {
   mostrarMensaje("Cotización cancelada. El histórico no ha cambiado.", "");
 }
 
+function reiniciarHistorico() {
+  if (!window.confirm("¿Seguro que quieres borrar el histórico de operaciones confirmadas?")) {
+    return;
+  }
+  operaciones = 0;
+  acumulado = 0;
+  ultimaReferencia = "—";
+  guardarHistorico();
+  actualizarResumen();
+  $("#referencia").text("Todavía no hay operación confirmada.");
+  mostrarMensaje("Histórico reiniciado.", "");
+}
+
 // TODO A13: tema oscuro/claro con persistencia localStorage.
 function alternarTema() {
   const actual = $("html").attr("data-theme");
@@ -210,6 +223,18 @@ $(document).ready(function () {
   }
 
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.
-  // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.
+  $("#formPresupuesto").on("submit", function (evento) {
+    evento.preventDefault();
+    cotizar();
+  });
+  $("#confirmar").on("click", confirmar);
+  $("#cancelar").on("click", cancelar);
+  $("#cambiarTema").on("click", alternarTema);
+  $("#reiniciar").on("click", reiniciarHistorico);
+  $("#servicio, #cantidad, #turno").on("input change", function () {
+    invalidarCotizacion("Has cambiado los datos: el presupuesto anterior ya no vale. Vuelve a pulsar «Cotizar».");
+  });
+
+  // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
 });

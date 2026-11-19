@@ -37,3 +37,5 @@ Crea y explica al menos CINCO casos concretos con tus valores de `SEMILLA`, `VAR
 <!-- release/marcosAstudillop2 -->
 
 <!-- release inalterada -->
+
+<!-- Historial paso a paso -->

@@ -9,6 +9,14 @@ let operaciones = 0;
 let acumulado = 0;
 let ultimaReferencia = "—";
 
+const TEXTO_ESTADO = {
+  SIN_COTIZACION: "SIN COTIZACIÓN",
+  COTIZADA: "COTIZADA",
+  CONFIRMADA: "CONFIRMADA",
+  INVALIDADA: "INVALIDADA",
+  CADUCADA: "CADUCADA"
+};
+
 // TODO A1: mostrar los datos derivados del perfil en la cabecera.
 function mostrarPerfil() {
   const letra = "ABCD"[VARIANTE];
@@ -67,7 +75,11 @@ function vaciarResumenCotizacion() {
 }
 
 // TODO A7: actualizar estado y habilitar Confirmar SOLO en estado COTIZADA.
-function cambiarEstado(nuevo) { estado = nuevo; }
+function cambiarEstado(nuevo) {
+  estado = nuevo;
+  $("#estado").text(TEXTO_ESTADO[nuevo]);
+  $("#confirmar").prop("disabled", nuevo !== "COTIZADA");
+}
 
 // TODO A8: invalidar una cotización activa si cambian campos del formulario.
 function invalidarCotizacion(motivo) {}

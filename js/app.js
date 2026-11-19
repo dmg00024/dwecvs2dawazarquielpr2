@@ -200,7 +200,12 @@ function cancelar() {
 
 // TODO A13: tema oscuro/claro con persistencia localStorage.
 function alternarTema() {
-
+  let nuevoTema = "oscuro";
+  if ($("html").attr("data-theme") === "oscuro") {
+    nuevoTema = "claro";
+  }
+  $("html").attr("data-theme", nuevoTema);
+  localStorage.setItem(`${PREFIJO_STORAGE}temaColores`, nuevoTema);
 }
 
 $(document).ready(function () {

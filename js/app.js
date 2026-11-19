@@ -107,3 +107,5 @@ $(document).ready(function () {
 // Bloqueo doble confirmacion
 
 // operaciones += 1
+
+// acumulado += totalPendiente

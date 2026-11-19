@@ -99,3 +99,5 @@ $(document).ready(function () {
 // invalidar por turno
 
 // Cancelar pasa a SIN_COTIZACION
+
+// Cancelar detiene reloj

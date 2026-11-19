@@ -10,8 +10,16 @@ let acumulado = 0;
 let ultimaReferencia = "—";
 
 // TODO A1: mostrar los datos derivados del perfil en la cabecera.
+
+// A1
 function mostrarPerfil() {
   $("#nombrePerfil").text(`${PERFIL.identificador} · ${PERFIL.tema}`);
+  $("#descripcionPerfil").text(PERFIL.descripcion);
+  $("#etiquetaCodigo").text(`Semilla: ${PERFIL.SEMILLA}`);
+  $("#etiquetaVariante").text(`Variante ${PERFIL.VARIANTE}`);
+  $("#etiquetaLimite").text(`Máx: ${PERFIL.MAX_UNIDADES}`);
+  $("#etiquetaRecargo").text(`Recargo: ${PERFIL.RECARGO_PORCENTAJE}%`);
+  $("#etiquetaTiempo").text(`Validez: ${PERFIL.SEGUNDOS_VALIDEZ} s`);
 }
 
 // TODO A2: actualizar los tres indicadores de operaciones confirmadas.

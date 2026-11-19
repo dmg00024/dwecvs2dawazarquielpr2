@@ -34,3 +34,5 @@ function euros(centimos) {
 }
 
 // case 'basico': return 1150;
+
+// case 'estandar': return 1925;

@@ -81,3 +81,5 @@ $(document).ready(function () {
 // SEGUNDOS_VALIDEZ 60s
 
 // Date.now() real
+
+// Estado CADUCADA

@@ -145,3 +145,5 @@ $(document).ready(function () {
 // input change
 
 // separacion tres capas
+
+// modularidad y limpieza

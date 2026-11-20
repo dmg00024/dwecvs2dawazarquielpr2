@@ -244,5 +244,12 @@ $(document).ready(function () {
   });
 
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
+  const turnoGuardado = sessionStorage.getItem(`${PREFIJO_STORAGE}turno`);
+  if (turnoGuardado === "manana" || turnoGuardado === "tarde") {
+    $("#turno").val(turnoGuardado);
+  }
+  $("#turno").on("change", function () {
+    sessionStorage.setItem(`${PREFIJO_STORAGE}turno`, $("#turno").val());
+  });
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.
 });

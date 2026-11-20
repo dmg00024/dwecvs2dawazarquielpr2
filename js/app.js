@@ -209,7 +209,6 @@ function alternarTema() {
 }
 
 $(document).ready(function () {
-
   // A13: aplicar el tema de colores guardado si lo hay (en vez de setItem usamos getItem)
   const temaGuardado = localStorage.getItem(`${PREFIJO_STORAGE}temaColores`);
   if (temaGuardado === "claro" || temaGuardado === "oscuro") {
@@ -218,6 +217,32 @@ $(document).ready(function () {
   mostrarPerfil();
   recuperarHistorico();
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.
+  //empezamos por el submit que es el formPresupuesto
+  $("#formPresupuesto").on("submit", function (evento) {
+    evento.preventDefault();   //esto se hace para no recargar la pagina como dice el comentario del final
+    cotizar();
+  });
+  $("#confirmar").on("click", confirmar);
+  $("#cancelar").on("click", cancelar);
+  $("#cambiarTema").on("click", alternarTema);
+  $("#servicio, #cantidad, #turno").on("input change", function () {
+    invalidarCotizacion("Has cambiado un dato del formulario. Vuelve a pulsar «Cotizar».");
+  });
+
+  // Reiniciar el histórico
+  $("#reiniciar").on("click", function () {
+    if (!confirm("¿Seguro que quieres borrar todas las operaciones confirmadas?")) {
+      return;
+    }
+    operaciones = 0;
+    acumulado = 0;
+    ultimaReferencia = "—";
+    guardarHistorico();
+    actualizarResumen();
+    $("#referencia").text("Todavía no hay operación confirmada.");
+    $("#mensaje").text("Histórico reiniciado.");
+  });
+
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.
 });

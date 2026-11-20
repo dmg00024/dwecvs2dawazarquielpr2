@@ -2,20 +2,14 @@
 
 // TODO M1: según el servicio, devolver el precio en céntimos (1150, 1925, 3275).
 function precioCentimos(servicio) {
-  if (servicio === "básico") {
+  if (servicio === "basico") {
     return 1150;
-  }
-  else if (servicio === "estándar") {
+  } else if (servicio === "estandar") {
     return 1925;
-  }
-
-
-  else if (servicio === "premium") {
+  } else if (servicio === "premium") {
     return 3275;
   }
-  else {
-    return  0;
-  }
+  return 0;
 }
 
 // TODO M2: devolver "" si todo es válido, o un MENSAJE claro si hay error.
@@ -23,35 +17,29 @@ function precioCentimos(servicio) {
 // Y la restricción de la temática personal. Además, el perfil no puede quedarse sin personalizar.
 
 function validarSolicitud(servicio, cantidadTexto, turno, limite, tema) {
-  const temaValido = ["tecnologia", "deporte", "musica", "cine"];
-  if (PERFIL.identificador === "" || PERFIL.tema === "") {
+  const temasValidos = ["tecnologia", "deporte", "musica", "cine"];
+  if (PERFIL.identificador.trim() === "" || !temasValidos.includes(tema)) {
     return "Error: debes personalizar tu perfil.";
   }
-
-  if (servicio === "") {
+  if (precioCentimos(servicio) === 0) {
     return "Error: debes seleccionar un servicio.";
   }
-
-  if (turno === "") {
+  if (turno !== "manana" && turno !== "tarde") {
     return "Error: debes seleccionar un turno.";
   }
-
-  if(cantidadTexto === "") {
+  if (cantidadTexto.trim() === "") {
     return "Error: debes introducir una cantidad.";
   }
   const cantidad = Number(cantidadTexto);
-
   if (!Number.isInteger(cantidad)) {
     return "Error: la cantidad debe ser un número entero.";
   }
-
   if (cantidad < 1 || cantidad > limite) {
-    return "Error: la cantidad debe estar entre 1 y ${limite}.";
+    return `Error: la cantidad debe estar entre 1 y ${limite}.`;
   }
-
-  if (tema === "musica" && servicio === "premium" && turno === "mañana") {
-    return "Error: tu tematica ${tema} no está disponible para el servicio ${servicio}"
-              + " en el turno de ${turno}.";
+  // Música: el servicio estándar de tarde no admite 4 o más unidades.
+  if (tema === "musica" && servicio === "estandar" && turno === "tarde" && cantidad >= 4) {
+    return "Error: en música, el servicio estándar de tarde admite como máximo 3 unidades.";
   }
   return "";
 }

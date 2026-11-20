@@ -15,11 +15,11 @@ let ultimaReferencia = "—";
 function mostrarPerfil() {
   $("#nombrePerfil").text(`${PERFIL.identificador} · ${PERFIL.tema}`);
   $("#descripcionPerfil").text(PERFIL.descripcion);
-  $("#etiquetaCodigo").text(`Semilla: ${PERFIL.SEMILLA}`);
-  $("#etiquetaVariante").text(`Variante ${PERFIL.VARIANTE}`);
-  $("#etiquetaLimite").text(`Máx: ${PERFIL.MAX_UNIDADES}`);
-  $("#etiquetaRecargo").text(`Recargo: ${PERFIL.RECARGO_PORCENTAJE}%`);
-  $("#etiquetaTiempo").text(`Validez: ${PERFIL.SEGUNDOS_VALIDEZ} s`);
+  $("#etiquetaCodigo").text(`Semilla: ${SEMILLA}`);
+  $("#etiquetaVariante").text(`Variante ${VARIANTE}`);
+  $("#etiquetaLimite").text(`Máx: ${MAX_UNIDADES}`);
+  $("#etiquetaRecargo").text(`Recargo: ${RECARGO_PORCENTAJE}%`);
+  $("#etiquetaTiempo").text(`Validez: ${SEGUNDOS_VALIDEZ} s`);
 }
 
 // TODO A2: actualizar los tres indicadores de operaciones confirmadas.
@@ -195,10 +195,26 @@ function confirmar() {
 }
 
 // TODO A12: cancelar cotización sin alterar histórico confirmado.
-function cancelar() {}
+
+// A12
+function cancelar() {
+  vaciarResumenCotizacion();
+  $("#formPresupuesto")[0].reset();
+  sessionStorage.removeItem(CLAVE_TURNO);
+  $("#referencia").text("Todavía no hay operación confirmada.");
+  $("#mensaje").text("Cotización cancelada.");
+}
 
 // TODO A13: tema oscuro/claro con persistencia localStorage.
-function alternarTema() {}
+
+// A13
+function alternarTema() {
+  const html = $("html");
+  const actual = html.attr("data-theme");
+  const nuevo = actual === "oscuro" ? "claro" : "oscuro";
+  html.attr("data-theme", nuevo);
+  localStorage.setItem(CLAVE_TEMA, nuevo);
+}
 
 $(document).ready(function () {
   mostrarPerfil();

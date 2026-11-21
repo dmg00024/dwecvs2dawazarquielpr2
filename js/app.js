@@ -12,17 +12,46 @@ let ultimaReferencia = "—";
 // TODO A1: mostrar los datos derivados del perfil en la cabecera.
 function mostrarPerfil() {
   $("#nombrePerfil").text(`${PERFIL.identificador} · ${PERFIL.tema}`);
+  $("#descripcionPerfil").text(PERFIL.descripcion);
+  $("#etiquetaCodigo").text(`Semilla: ${SEMILLA}`);
+  $("#etiquetaVariante").text(`Política ${"ABCD"[VARIANTE]} (variante ${VARIANTE})`);
+  $("#etiquetaLimite").text(`Máximo: ${MAX_UNIDADES} plazas`);
+  $("#etiquetaRecargo").text(`Recargo: ${RECARGO_PORCENTAJE} %`);
+  $("#etiquetaTiempo").text(`Validez: ${SEGUNDOS_VALIDEZ} s`);
 }
 
 // TODO A2: actualizar los tres indicadores de operaciones confirmadas.
-function actualizarResumen() {}
+function actualizarResumen() {
+  $("#operaciones").text(operaciones);
+  $("#acumulado").text(euros(acumulado));
+  $("#ultima").text(ultimaReferencia);
+}
 
 // TODO A3: leer los tres valores de localStorage de este perfil, sanearlos,
 // y llamar a actualizarResumen(). Si no existen, usar 0, 0, "—".
-function recuperarHistorico() {}
+function recuperarHistorico() {
+  function leerEntero(clave) {
+    const texto = localStorage.getItem(PREFIJO_STORAGE + clave) ?? "";
+    const valor = Number(texto);
+    return /^[0-9]+$/.test(texto) && Number.isSafeInteger(valor) ? valor : 0;
+  }
+
+  operaciones = leerEntero("operaciones");
+  acumulado = leerEntero("acumulado");
+
+  const referencia = localStorage.getItem(PREFIJO_STORAGE + "ultimaReferencia");
+  const referenciaEsperada = construirReferencia(PERFIL.identificador, operaciones);
+  ultimaReferencia = operaciones > 0 && referencia === referenciaEsperada ? referencia : "—";
+
+  actualizarResumen();
+}
 
 // TODO A4: guardar en localStorage operaciones, acumulado y ultimaReferencia.
-function guardarHistorico() {}
+function guardarHistorico() {
+  localStorage.setItem(PREFIJO_STORAGE + "operaciones", String(operaciones));
+  localStorage.setItem(PREFIJO_STORAGE + "acumulado", String(acumulado));
+  localStorage.setItem(PREFIJO_STORAGE + "ultimaReferencia", ultimaReferencia);
+}
 
 // TODO A5: detener el intervalo previo y reiniciar el instante de caducidad.
 function detenerReloj() {}
@@ -55,7 +84,10 @@ function alternarTema() {}
 
 $(document).ready(function () {
   mostrarPerfil();
+  recuperarHistorico();
   // TODO A14: conectar submit, click, input/change (invalidación), tema y reset.
   // TODO A15: recuperar turno en sessionStorage y conservarlo en esta pestaña.
   // Importante: .on('submit') requiere preventDefault() para no recargar la página.
 });
+
+

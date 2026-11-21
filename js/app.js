@@ -30,7 +30,36 @@ function actualizarResumen() {
 
 // TODO A3: leer los tres valores de localStorage de este perfil, sanearlos,
 // y llamar a actualizarResumen(). Si no existen, usar 0, 0, "—".
-function recuperarHistorico() {}
+function recuperarHistorico() {
+    // 1. Operaciones
+    const textoOperaciones = localStorage.getItem(PREFIJO_STORAGE + "operaciones");
+    const numeroOperaciones = Number(textoOperaciones);
+    if (Number.isInteger(numeroOperaciones) && numeroOperaciones >= 0) {
+      operaciones = numeroOperaciones;
+    } else {
+      operaciones = 0;
+    }
+
+    // 2. Acumulado
+    const textoAcumulado = localStorage.getItem(PREFIJO_STORAGE + "acumulado");
+    const numeroAcumulado = Number(textoAcumulado);
+    if (Number.isInteger(numeroAcumulado) && numeroAcumulado >= 0) {
+      acumulado = numeroAcumulado;
+    } else {
+      acumulado = 0;
+    }
+
+    // 3. Última referencia
+    const textoReferencia = localStorage.getItem(PREFIJO_STORAGE + "ultimaReferencia");
+    if (textoReferencia !== null && textoReferencia.startsWith("DWEC-")) {
+      ultimaReferencia = textoReferencia;
+    } else {
+      ultimaReferencia = "—";
+    }
+
+    // 4. Mostrar en pantalla
+    actualizarResumen();
+}
 
 // TODO A4: guardar en localStorage operaciones, acumulado y ultimaReferencia.
 function guardarHistorico() {}

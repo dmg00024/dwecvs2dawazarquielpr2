@@ -62,7 +62,11 @@ function recuperarHistorico() {
 }
 
 // TODO A4: guardar en localStorage operaciones, acumulado y ultimaReferencia.
-function guardarHistorico() {}
+function guardarHistorico() {
+  localStorage.setItem(PREFIJO_STORAGE + "operaciones", String(operaciones));
+  localStorage.setItem(PREFIJO_STORAGE + "acumulado", String(acumulado));
+  localStorage.setItem(PREFIJO_STORAGE + "ultimaReferencia", ultimaReferencia);
+}
 
 // TODO A5: detener el intervalo previo y reiniciar el instante de caducidad.
 function detenerReloj() {}
